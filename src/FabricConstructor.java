@@ -1,17 +1,11 @@
 //Takes User input to construct a new fabric 
 // need to implement check that all required input is valid 
 
-import java.awt.ComponentOrientation;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -166,7 +160,6 @@ public class FabricConstructor extends JFrame {
 		
 		
 	
-			 
 		 }
 	
 	
@@ -185,13 +178,9 @@ public class FabricConstructor extends JFrame {
 		
 	
 	public void writeFabricList(ArrayList<Fabric> fabricList) throws IOException {
-        FileOutputStream fos = new FileOutputStream(new File(FABRIC_SAVE));
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(fabricList);
-        oos.close();
-
+		SaveFile<Fabric> fabricSave = new SaveFile<>(fabricList);
+		fabricSave.saveInventory(FABRIC_SAVE);
 	}
 
 	
 }
-
