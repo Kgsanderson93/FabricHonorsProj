@@ -12,6 +12,7 @@ import java.awt.GridBagLayout;
 import java.util.ArrayList;
 
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -36,6 +37,11 @@ public class PatternConstructor extends JFrame{
 	private String[] patternTypes= {"Shirt, Dress, Pants, Swim, Lingerie, Pjs, Bags, Toys, Romper"};
 	private JCheckBox[] jCBPaternTypes=new JCheckBox[patternTypes.length];
 	
+	private String[] fabricBaseLabels = { "Double Brushed Poly", "Cotton Lycra", "FrenchTerry", "Rayon", "Denim" };
+	private JLabel jlBaseSelector = new JLabel("Select base");
+	private JComboBox<String> cbfabricBase = new JComboBox<String>(fabricBaseLabels);
+	
+	
 	
 	private  boolean splityardage;
 	private JLabel jLSplitYardagePrompt=new JLabel("Do you want to split the yardage requirements into main, contrast, and bands?");
@@ -52,11 +58,11 @@ public class PatternConstructor extends JFrame{
 	private JLabel jLMaxStretch= new JLabel("please enter the maximum stretch");
 	private JTextField jTMinStretch= new JTextField();
 	private JTextField jmaxStretch= new JTextField();
-	
+	//change to who to use for 
 	private String base;
-	private JLabel jLbase= new JLabel("This pattern is suitable for these bases:");
-	private String[] fabricBaseLabels = { "Double Brushed Poly", "Cotton Lycra", "FrenchTerry", "Rayon", "Denim" };
-	private JCheckBox[] jCBFabricTypes=new JCheckBox[fabricBaseLabels.length];
+	private JLabel JLwhofor= new JLabel("This pattern is suitable for these bases:");
+	private String[] patternWho = { "Double Brushed Poly", "Cotton Lycra", "FrenchTerry", "Rayon", "Denim" };
+	private JCheckBox[] jCBwhofor=new JCheckBox[fabricBaseLabels.length];
 	
 	private int contrastFabric;
 	private JLabel jLContrastYardagePrompt= new JLabel("how many yards of this pattern will be the contrast fabric");
@@ -80,6 +86,7 @@ public class PatternConstructor extends JFrame{
 		constraints.gridy=0;
 		constraints.weightx=1;
 		constraints.weighty=0;
+		
 		this.setContentPane(addAPatternMain);
 		this.setSize(DEFAULT_X_SIZE, DEFAULT_Y_SIZE);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -88,9 +95,17 @@ public class PatternConstructor extends JFrame{
 		for (int i = 0; i < jCBPaternTypes.length; i++) {
 			jCBPaternTypes[i] = new JCheckBox(patternTypes[i]);		
 	}
-		for (int i = 0; i < jCBFabricTypes.length; i++) {
-			jCBFabricTypes[i] = new JCheckBox(fabricBaseLabels[i]);		
+		for (int i = 0; i < jCBwhofor.length; i++) {
+			jCBwhofor[i] = new JCheckBox(fabricBaseLabels[i]);		
 	}
+		//name
+		addAPatternMain.add(jLNamePrompt, constraints);
+		addAPatternMain.add(jTNameInput, constraints);
+		constraints.gridy++;
+		//
+		addAPatternMain.add(jLNamePrompt, constraints);
+		addAPatternMain.add(jTNameInput, constraints);
+		constraints.gridy++;
 
 }
 }
