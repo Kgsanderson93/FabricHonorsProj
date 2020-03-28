@@ -11,6 +11,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -37,20 +38,15 @@ public class PatternConstructor extends JFrame{
 	private String[] patternTypes= {"Shirt, Dress, Pants, Swim, Lingerie, Pjs, Bags, Toys, Romper"};
 	private JCheckBox[] jCBPaternTypes=new JCheckBox[patternTypes.length];
 	
+	private String base;
 	private String[] fabricBaseLabels = { "Double Brushed Poly", "Cotton Lycra", "FrenchTerry", "Rayon", "Denim" };
-	private JLabel jlBaseSelector = new JLabel("Select base");
-	private JComboBox<String> cbfabricBase = new JComboBox<String>(fabricBaseLabels);
+	private JLabel jlBaseSelector = new JLabel("Select bases most appropriate");
+	private JCheckBox[] jCBfabricBase = new JCheckBox[fabricBaseLabels.length];
 	
-	
-	
-	private  boolean splityardage;
-	private JLabel jLSplitYardagePrompt=new JLabel("Do you want to split the yardage requirements into main, contrast, and bands?");
-	private JRadioButton yes=new JRadioButton("yes");
-	private JRadioButton no= new JRadioButton("no");
-	
-	private double yardage;
-	private JLabel jLYardagePrompt= new JLabel("how many yards does this pattern require");
-	private JTextField jTYardageInput= new JTextField();
+	private String whofor;
+	private JLabel JLwhofor= new JLabel("This pattern is suitable for:");
+	private String[] patternWho = { "Men", "Women", "children", "Baby", "Other"};
+	private JCheckBox[] jCBwhofor=new JCheckBox[patternWho.length];
 	
 	private int minStretch = 30;
 	private int maxStretch= 100;
@@ -58,11 +54,16 @@ public class PatternConstructor extends JFrame{
 	private JLabel jLMaxStretch= new JLabel("please enter the maximum stretch");
 	private JTextField jTMinStretch= new JTextField();
 	private JTextField jmaxStretch= new JTextField();
-	//change to who to use for 
-	private String base;
-	private JLabel JLwhofor= new JLabel("This pattern is suitable for these bases:");
-	private String[] patternWho = { "Double Brushed Poly", "Cotton Lycra", "FrenchTerry", "Rayon", "Denim" };
-	private JCheckBox[] jCBwhofor=new JCheckBox[fabricBaseLabels.length];
+	
+	private double yardage;
+	private JLabel jLYardagePrompt= new JLabel("how many yards does this pattern require");
+	private JTextField jTYardageInput= new JTextField();
+	
+	private  boolean splityardage;
+	private JLabel jLSplitYardagePrompt=new JLabel("Do you want to split the yardage requirements into main, contrast, and bands?");
+	private JRadioButton yes=new JRadioButton("yes");
+	private JRadioButton no= new JRadioButton("no");
+	private ButtonGroup groupYesNo= new ButtonGroup();
 	
 	private int contrastFabric;
 	private JLabel jLContrastYardagePrompt= new JLabel("how many yards of this pattern will be the contrast fabric");
@@ -77,6 +78,7 @@ public class PatternConstructor extends JFrame{
 	private JTextField jTBandYardageInput= new JTextField();
 
 	public PatternConstructor(ArrayList<Fabric> fabricList, ArrayList <Pattern> patternList) {
+		//create panel, layout and layout constraints
 		GridBagLayout layout = new GridBagLayout();
 		JPanel addAPatternMain= new JPanel(layout);
 		GridBagConstraints constraints= new GridBagConstraints();
@@ -86,19 +88,26 @@ public class PatternConstructor extends JFrame{
 		constraints.gridy=0;
 		constraints.weightx=1;
 		constraints.weighty=0;
-		
 		this.setContentPane(addAPatternMain);
 		this.setSize(DEFAULT_X_SIZE, DEFAULT_Y_SIZE);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setVisible(true);
 		
+		//create boxes 
 		for (int i = 0; i < jCBPaternTypes.length; i++) {
 			jCBPaternTypes[i] = new JCheckBox(patternTypes[i]);		
 	}
 		for (int i = 0; i < jCBwhofor.length; i++) {
-			jCBwhofor[i] = new JCheckBox(fabricBaseLabels[i]);		
+			jCBwhofor[i] = new JCheckBox(patternWho[i]);		
 	}
-		//name
+		for (int i = 0; i < jCBfabricBase.length; i++) {
+			jCBfabricBase[i] = new JCheckBox(fabricBaseLabels[i]);		
+	}
+		//add buttons to group 
+		groupYesNo.add(yes);
+		groupYesNo.add(no);
+		
+		//name added to panel 1
 		addAPatternMain.add(jLNamePrompt, constraints);
 		addAPatternMain.add(jTNameInput, constraints);
 		constraints.gridy++;
