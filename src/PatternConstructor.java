@@ -140,7 +140,8 @@ public class PatternConstructor extends JFrame {
 		addAPatternMain.add(jLMinStretch, constraints);
 		constraints.gridx++;
 		addAPatternMain.add(jTMinStretch, constraints);
-		constraints.gridx++;
+		constraints.gridy++;
+		constraints.gridx=0;
 		addAPatternMain.add(jLMaxStretch, constraints);
 		constraints.gridx++;
 		addAPatternMain.add(jTMaxStretch, constraints);
@@ -166,8 +167,8 @@ public class PatternConstructor extends JFrame {
 		
 	
 		constraints.gridy++;
-		constraints.gridx =0;
-		addAPatternMain.add(jLSplitYardagePrompt);
+		constraints.gridx=0;
+		addAPatternMain.add(jLSplitYardagePrompt,constraints);
 		constraints.gridx++;
 		addAPatternMain.add(yes, constraints);
 		constraints.gridx++;
