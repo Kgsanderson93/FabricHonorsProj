@@ -16,44 +16,43 @@ public class FirstWindow extends JFrame {
 	private JButton addAFabric = new JButton("Add a fabric");
 	private JButton addAPattern = new JButton("Add a pattern");
 	private JButton browseFabric = new JButton("Browse fabric");
-	private JButton browsePatterns = new JButton("Brose patterns");
+	private JButton browsePatterns = new JButton("Browse patterns");
 	public static final String SAVE_FILE = "fabric_inventory.sav";
 	private static final int DEFAULT_X_SIZE = 400;
 	private static final int DEFAULT_Y_SIZE = 400;
-	
 
 	public FirstWindow(ArrayList<Fabric> fabricList, ArrayList<Pattern> patternList) {
-		//make actionlisteners for buttons{
-		ActionListener addFabricListener=new ActionListener() {
+		// make actionlisteners for buttons{
+		ActionListener addFabricListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showfabricconstructor(fabricList);	
+				showfabricconstructor(fabricList);
 			}
-	     
+
 		};
-		ActionListener addPatternListener=new ActionListener() {
+		ActionListener addPatternListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showPatternConstructor(fabricList, patternList);	
-			}       
+				showPatternConstructor(fabricList, patternList);
+			}
 		};
-		ActionListener browseFabricListener=new ActionListener() {
+		ActionListener browseFabricListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for(Fabric fabric : fabricList)
+				for (Fabric fabric : fabricList)
 					System.out.println(fabric.toString());
-			}       
+			}
 		};
-		ActionListener browsePatternListener=new ActionListener() {
+		ActionListener browsePatternListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for(Pattern pattern : patternList)
+				for (Pattern pattern : patternList)
 					System.out.println(pattern.toString());
-					
-			}       
+
+			}
 		};
-		//}
-		
+		// }
+
 		GridBagLayout gbl = new GridBagLayout();
 		JPanel firstWindow = new JPanel(gbl);
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -64,17 +63,17 @@ public class FirstWindow extends JFrame {
 		constraints.weightx = 1;
 		constraints.weighty = 0;
 		addAFabric.addActionListener(addFabricListener);
-		firstWindow.add(addAFabric,constraints);
-		
+		firstWindow.add(addAFabric, constraints);
+
 		constraints.gridx++;
 		addAPattern.addActionListener(addPatternListener);
 		firstWindow.add(addAPattern, constraints);
-		
-		constraints.gridx=0;
+
+		constraints.gridx = 0;
 		constraints.gridy++;
 		browseFabric.addActionListener(browseFabricListener);
-		firstWindow.add(browseFabric,constraints);
-		
+		firstWindow.add(browseFabric, constraints);
+
 		constraints.gridx++;
 		browsePatterns.addActionListener(browsePatternListener);
 		firstWindow.add(browsePatterns, constraints);
@@ -82,17 +81,15 @@ public class FirstWindow extends JFrame {
 		this.setSize(DEFAULT_X_SIZE, DEFAULT_Y_SIZE);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setVisible(true);
-		
-		
 
-	
-	
-}
-protected void showPatternConstructor(ArrayList<Fabric> fabricList, ArrayList<Pattern> patternList) {
-		PatternConstructor pc = new PatternConstructor(fabricList, patternList);
-		
 	}
-private void showfabricconstructor(ArrayList<Fabric> fabricList) {
-	FabricConstructor fc = new FabricConstructor(this, fabricList);
-}
+
+	private void showPatternConstructor(ArrayList<Fabric> fabricList, ArrayList<Pattern> patternList) {
+		PatternConstructor pc = new PatternConstructor(fabricList, patternList);
+
+	}
+
+	private void showfabricconstructor(ArrayList<Fabric> fabricList) {
+		FabricConstructor fc = new FabricConstructor(this, fabricList);
+	}
 }

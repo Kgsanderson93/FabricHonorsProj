@@ -37,7 +37,8 @@ public class ConfirmationDialog {
 		LayoutManager layout = new FlowLayout();
 
 		JLabel confirmPrompt = new JLabel("Is this correct? Press Yes to save and No to return to Add-a-Fabric");
-
+//change to +class?
+		
 		JButton yesButton = new JButton("yes");
 		JButton noButton = new JButton("no");
 		popup.setLayout(layout);
