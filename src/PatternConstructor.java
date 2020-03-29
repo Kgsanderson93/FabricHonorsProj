@@ -28,7 +28,7 @@ public class PatternConstructor extends JFrame {
 	 */
 	private static final long serialVersionUID = -7835405366703823555L;
 	private static final int DEFAULT_X_SIZE = 1200;
-	private static final int DEFAULT_Y_SIZE = 800;
+	private static final int DEFAULT_Y_SIZE = 600;
 
 	private String name;
 	private JLabel jLNamePrompt = new JLabel("Pattern Name:");
@@ -76,9 +76,10 @@ public class PatternConstructor extends JFrame {
 	private JTextField jTMainYardageInput = new JTextField();
 
 	private int bandFabric;
-	private JLabel jLBandYardagePrompt = new JLabel(
-			"how many yards of this pattern will be used as banding (requiring more than 50% stretch and good recovery)");
+	private JLabel jLBandYardagePrompt = new JLabel("how many yards of this pattern will be used as banding");
 	private JTextField jTBandYardageInput = new JTextField();
+	
+	private JLabel prompt=new JLabel("Please enter the Details of this Pattern");
 
 	public PatternConstructor(ArrayList<Fabric> fabricList, ArrayList<Pattern> patternList) {
 		// create panel, layout and layout constraints
@@ -90,7 +91,7 @@ public class PatternConstructor extends JFrame {
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.weightx = 1;
-		constraints.weighty = 0;
+		constraints.weighty = 1;
 		this.setContentPane(addAPatternMain);
 		this.setSize(DEFAULT_X_SIZE, DEFAULT_Y_SIZE);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -98,34 +99,60 @@ public class PatternConstructor extends JFrame {
 
 		// create Split Yardage Panel
 		JPanel splitYardagePanel= new JPanel(layout);
+		constraints.gridx=0;
+		splitYardagePanel.add(jLMainYardagePrompt, constraints);
+		constraints.gridx++;
+		splitYardagePanel.add(jTMainYardageInput, constraints);
+		
+		constraints.gridy=9;
+		constraints.gridx=0;
+		splitYardagePanel.add(jLBandYardagePrompt, constraints);
+		constraints.gridx++;
+		splitYardagePanel.add(jTBandYardageInput, constraints);
+		constraints.gridy=10;
+		constraints.gridx=0;
+		splitYardagePanel.add(jLContrastYardagePrompt , constraints);
+		constraints.gridx++;
+		splitYardagePanel.add(jTContrastYardageInput, constraints);
+		constraints.gridy=9;
+		constraints.gridx=0;
+		addAPatternMain.add(splitYardagePanel,constraints);
+		splitYardagePanel.setVisible(false);
+		
 		
 		// name added to panel 1
+		constraints.gridy=0;
+		constraints.gridx=0;
+		addAPatternMain.add(prompt, constraints);
+		constraints.gridy=1;
+		constraints.gridx=0;
 		addAPatternMain.add(jLNamePrompt, constraints);
-		constraints.gridx++;
+		constraints.gridx=1;
 		addAPatternMain.add(jTNameInput, constraints);
-		constraints.gridy++;
-		constraints.gridx = 0;
+	
 
 		// pattern type added to panel 1
+		constraints.gridy=2;
+		constraints.gridx = 0;
 		addAPatternMain.add(jLPatternTypesPrompt, constraints);
-		constraints.gridx++;
+		constraints.gridx=1;
 		for (int i = 0; i < jCBPaternTypes.length; i++) {
 			jCBPaternTypes[i] = new JCheckBox(patternTypes[i]);
 			addAPatternMain.add(jCBPaternTypes[i], constraints);
 			constraints.gridx++;
 		}
 		// who the pattern is for added to panel 1
-		constraints.gridy++;
+		constraints.gridy=3;
 		constraints.gridx = 0;
 		addAPatternMain.add(jLWhoFor, constraints);
-		constraints.gridx++;
+		constraints.gridx=1;
 		for (int i = 0; i < jCBwhofor.length; i++) {
 			jCBwhofor[i] = new JCheckBox(patternWho[i]);
 			addAPatternMain.add(jCBwhofor[i], constraints);
 			constraints.gridx++;
 		}
 		// bases the pattern is suitable for added to panel 1
-		constraints.gridy++;
+		constraints.gridy=4;
 		constraints.gridx = 0;
 		addAPatternMain.add(jlBaseSelector, constraints);
 		constraints.gridx++;
@@ -135,19 +162,19 @@ public class PatternConstructor extends JFrame {
 			constraints.gridx++;
 		}
 		// add stretch requirements
-		constraints.gridy++;
+		constraints.gridy=5;
 		constraints.gridx = 0;
 		addAPatternMain.add(jLMinStretch, constraints);
 		constraints.gridx++;
 		addAPatternMain.add(jTMinStretch, constraints);
-		constraints.gridy++;
+		constraints.gridy=6;
 		constraints.gridx=0;
 		addAPatternMain.add(jLMaxStretch, constraints);
 		constraints.gridx++;
 		addAPatternMain.add(jTMaxStretch, constraints);
 
 		// add yardage
-		constraints.gridy++;
+		constraints.gridy=7;
 		constraints.gridx = 0;
 		addAPatternMain.add(jLYardagePrompt, constraints);
 		constraints.gridx++;
@@ -156,17 +183,25 @@ public class PatternConstructor extends JFrame {
 		// add buttons to group
 		groupYesNo.add(yes);
 		groupYesNo.add(no);
-		// addAndWait(addButton);
+		
 		ActionListener yesSplitListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				splitYardagePanel.setVisible(true);
 			}
 		};
+		ActionListener noSplitListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				splitYardagePanel.setVisible(false);
+				//add a way to either erase any input given if yes to no or ignore input
+			}
+		};
 		yes.addActionListener(yesSplitListener);
+		no.addActionListener(noSplitListener);
 		
 	
-		constraints.gridy++;
+		constraints.gridy=8;
 		constraints.gridx=0;
 		addAPatternMain.add(jLSplitYardagePrompt,constraints);
 		constraints.gridx++;
