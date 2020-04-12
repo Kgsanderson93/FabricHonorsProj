@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -76,10 +77,13 @@ public class PatternConstructor extends JFrame {
 	private JTextField jTMainYardageInput = new JTextField();
 
 	private int bandFabric;
-	private JLabel jLBandYardagePrompt = new JLabel("how many yards of this pattern will be used as banding");
+	private JLabel jLBandYardagePrompt = new JLabel("How many yards of this pattern will be used as banding");
 	private JTextField jTBandYardageInput = new JTextField();
 	
 	private JLabel prompt=new JLabel("Please enter the Details of this Pattern");
+	private JButton add= new JButton("Continue to fabric selection");
+	
+	
 
 	public PatternConstructor(ArrayList<Fabric> fabricList, ArrayList<Pattern> patternList) {
 		// create panel, layout and layout constraints
@@ -194,8 +198,19 @@ public class PatternConstructor extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				splitYardagePanel.setVisible(false);
+				// look at generic-ing it so that fabric constructor and pattern constructor both use the same method and it may be reused other places as well. see tablet for details
+				Utility.clearFields(splitYardagePanel);
+				
 				//add a way to either erase any input given if yes to no or ignore input
 			}
+		};
+		ActionListener continueListener= new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				showConfirmDialog(patternList);
+			}
+
+			
 		};
 		yes.addActionListener(yesSplitListener);
 		no.addActionListener(noSplitListener);
@@ -208,6 +223,15 @@ public class PatternConstructor extends JFrame {
 		addAPatternMain.add(yes, constraints);
 		constraints.gridx++;
 		addAPatternMain.add(no, constraints);
+		
 
 	}
+	//public void clearFields() {
+
+	private void showConfirmDialog(ArrayList<Pattern> patternList) {
+		// get values and package into a new panel to pass to show confirm dialog
+		
+	}	
+		
+	
 }

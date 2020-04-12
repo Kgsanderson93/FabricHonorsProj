@@ -51,6 +51,7 @@ public class ConfirmationDialog {
 			public void actionPerformed(ActionEvent e) {
 				fabricList.add(newFabric);
 				confirmationyes(fabricList);
+				Utility.clearFields(displayInfo2Confirm);
 				
 				popup.dispose();
 			}
@@ -72,7 +73,7 @@ public class ConfirmationDialog {
 	public void confirmationyes(ArrayList<Fabric> fabricList) {
 		
 		
-		parent.clearFields();
+		
 		try {
 			parent.writeFabricList(fabricList);
 		} catch (IOException e) {

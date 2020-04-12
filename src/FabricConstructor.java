@@ -164,7 +164,7 @@ public class FabricConstructor extends JFrame {
 	
 	
 	public void clearFields() {
-		// TODO Auto-generated method stub
+		
 		fabricNameInput.setText(null);
 		fabricYardageInput.setText(null);
 		jtStretchInput.setText(null);
