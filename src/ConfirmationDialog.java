@@ -19,15 +19,15 @@ import javax.swing.JLabel;
 
 import javax.swing.JPanel;
 
-public class ConfirmationDialog {
-	private FabricConstructor parent;
-	private ArrayList<Fabric> fabricList;
-	private Fabric newFabric;
+public class ConfirmationDialog<e> {
+	private JFrame parent;
+	private ArrayList<e> saveFile;
+	private e newE;
 
-	public ConfirmationDialog(FabricConstructor parent, ArrayList<Fabric> fabricList, JPanel displayInfo2Confirm,Fabric newFabric) {
-		this.newFabric= newFabric;
-		this.parent = parent;
-		this.fabricList = fabricList;
+	public ConfirmationDialog(JFrame parent, SaveFile<e> saveFile, JPanel displayInfo2Confirm,e newE) {
+		this.setNewE(newE);
+		this.setParent(parent);
+		this.setSaveFile(saveFile.getInventory());
 		JFrame popup = new JFrame("is this correct?");
 		popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		popup.setSize(560, 200);
@@ -36,7 +36,7 @@ public class ConfirmationDialog {
 
 		LayoutManager layout = new FlowLayout();
 
-		JLabel confirmPrompt = new JLabel("Is this correct? Press Yes to save and No to return to Add-a-Fabric");
+		JLabel confirmPrompt = new JLabel("Is this correct? Press Yes to save and No to return to");
 //change to +class?
 		
 		JButton yesButton = new JButton("yes");
@@ -49,9 +49,9 @@ public class ConfirmationDialog {
 		ActionListener addButtonListeneryes = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				fabricList.add(newFabric);
-				confirmationyes(fabricList);
-				Utility.clearFields(displayInfo2Confirm);
+				saveFile.add(newE);
+				confirmationyes(saveFile);
+				Utility.clearFields(parent);
 				
 				popup.dispose();
 			}
@@ -70,20 +70,40 @@ public class ConfirmationDialog {
 		
 	}
 
-	public void confirmationyes(ArrayList<Fabric> fabricList) {
-		
-		
-		
+	public void confirmationyes(SaveFile<e> saveFile2) {
+
+		String location = saveFile2.getSaveLocation();
+
 		try {
-			parent.writeFabricList(fabricList);
+			saveFile2.saveInventory(location);
 		} catch (IOException e) {
 			// Also notify the user that we couldn't save the file for some reason.
 			e.printStackTrace();
 		}
-
 	}
 
-	
-
+	public JFrame getParent() {
+		return parent;
 	}
 
+	public void setParent(JFrame parent) {
+		this.parent = parent;
+	}
+
+	public ArrayList<e> getSaveFile() {
+		return saveFile;
+	}
+
+	public void setSaveFile(ArrayList<e> saveFile) {
+		this.saveFile = saveFile;
+	}
+
+	public e getNewE() {
+		return newE;
+	}
+
+	public void setNewE(e newE) {
+		this.newE = newE;
+	}
+
+}

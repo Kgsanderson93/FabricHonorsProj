@@ -10,12 +10,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,6 +29,87 @@ public class PatternConstructor extends JFrame {
 	private static final int DEFAULT_Y_SIZE = 600;
 
 	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPatternTypesSelected() {
+		return patternTypesSelected;
+	}
+
+	public void setPatternTypesSelected(String patternTypesSelected) {
+		this.patternTypesSelected = patternTypesSelected;
+	}
+
+	public String getBase() {
+		return base;
+	}
+
+	public void setBase(String base) {
+		this.base = base;
+	}
+
+	public String getWhofor() {
+		return whofor;
+	}
+
+	public void setWhofor(String whofor) {
+		this.whofor = whofor;
+	}
+
+	public int getMinStretch() {
+		return minStretch;
+	}
+
+	public void setMinStretch(int minStretch) {
+		this.minStretch = minStretch;
+	}
+
+	public int getMaxStretch() {
+		return maxStretch;
+	}
+
+	public void setMaxStretch(int maxStretch) {
+		this.maxStretch = maxStretch;
+	}
+
+	public double getYardage() {
+		return yardage;
+	}
+
+	public void setYardage(double yardage) {
+		this.yardage = yardage;
+	}
+
+	public int getContrastFabric() {
+		return contrastFabric;
+	}
+
+	public void setContrastFabric(int contrastFabric) {
+		this.contrastFabric = contrastFabric;
+	}
+
+	public int getMainFabric() {
+		return mainFabric;
+	}
+
+	public void setMainFabric(int mainFabric) {
+		this.mainFabric = mainFabric;
+	}
+
+	public int getBandFabric() {
+		return bandFabric;
+	}
+
+	public void setBandFabric(int bandFabric) {
+		this.bandFabric = bandFabric;
+	}
+
 	private JLabel jLNamePrompt = new JLabel("Pattern Name:");
 	private JTextField jTNameInput = new JTextField();
 
@@ -63,7 +141,8 @@ public class PatternConstructor extends JFrame {
 	private JTextField jTYardageInput = new JTextField();
 
 	private boolean splityardage;
-	private JLabel jLSplitYardagePrompt = new JLabel("Do you want to split the yardage requirements into main, contrast, and bands?");
+	private JLabel jLSplitYardagePrompt = new JLabel(
+			"Do you want to split the yardage requirements into main, contrast, and bands?");
 	private JRadioButton yes = new JRadioButton("yes");
 	private JRadioButton no = new JRadioButton("no");
 	private ButtonGroup groupYesNo = new ButtonGroup();
@@ -79,13 +158,11 @@ public class PatternConstructor extends JFrame {
 	private int bandFabric;
 	private JLabel jLBandYardagePrompt = new JLabel("How many yards of this pattern will be used as banding");
 	private JTextField jTBandYardageInput = new JTextField();
-	
-	private JLabel prompt=new JLabel("Please enter the Details of this Pattern");
-	private JButton add= new JButton("Continue to fabric selection");
-	
-	
 
-	public PatternConstructor(ArrayList<Fabric> fabricList, ArrayList<Pattern> patternList) {
+	private JLabel prompt = new JLabel("Please enter the Details of this Pattern");
+	private JButton add = new JButton("Continue to fabric selection");
+
+	public PatternConstructor(SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
 		// create panel, layout and layout constraints
 		GridBagLayout layout = new GridBagLayout();
 		JPanel addAPatternMain = new JPanel(layout);
@@ -102,61 +179,59 @@ public class PatternConstructor extends JFrame {
 		this.setVisible(true);
 
 		// create Split Yardage Panel
-		JPanel splitYardagePanel= new JPanel(layout);
-		constraints.gridx=0;
+		JPanel splitYardagePanel = new JPanel(layout);
+		constraints.gridx = 0;
 		splitYardagePanel.add(jLMainYardagePrompt, constraints);
 		constraints.gridx++;
 		splitYardagePanel.add(jTMainYardageInput, constraints);
-		
-		constraints.gridy=9;
-		constraints.gridx=0;
+
+		constraints.gridy = 9;
+		constraints.gridx = 0;
 		splitYardagePanel.add(jLBandYardagePrompt, constraints);
 		constraints.gridx++;
 		splitYardagePanel.add(jTBandYardageInput, constraints);
-		constraints.gridy=10;
-		constraints.gridx=0;
-		splitYardagePanel.add(jLContrastYardagePrompt , constraints);
+		constraints.gridy = 10;
+		constraints.gridx = 0;
+		splitYardagePanel.add(jLContrastYardagePrompt, constraints);
 		constraints.gridx++;
 		splitYardagePanel.add(jTContrastYardageInput, constraints);
-		constraints.gridy=9;
-		constraints.gridx=0;
-		addAPatternMain.add(splitYardagePanel,constraints);
+		constraints.gridy = 9;
+		constraints.gridx = 0;
+		addAPatternMain.add(splitYardagePanel, constraints);
 		splitYardagePanel.setVisible(false);
-		
-		
+
 		// name added to panel 1
-		constraints.gridy=0;
-		constraints.gridx=0;
+		constraints.gridy = 0;
+		constraints.gridx = 0;
 		addAPatternMain.add(prompt, constraints);
-		constraints.gridy=1;
-		constraints.gridx=0;
+		constraints.gridy = 1;
+		constraints.gridx = 0;
 		addAPatternMain.add(jLNamePrompt, constraints);
-		constraints.gridx=1;
+		constraints.gridx = 1;
 		addAPatternMain.add(jTNameInput, constraints);
-	
 
 		// pattern type added to panel 1
-		constraints.gridy=2;
+		constraints.gridy = 2;
 		constraints.gridx = 0;
 		addAPatternMain.add(jLPatternTypesPrompt, constraints);
-		constraints.gridx=1;
+		constraints.gridx = 1;
 		for (int i = 0; i < jCBPaternTypes.length; i++) {
 			jCBPaternTypes[i] = new JCheckBox(patternTypes[i]);
 			addAPatternMain.add(jCBPaternTypes[i], constraints);
 			constraints.gridx++;
 		}
 		// who the pattern is for added to panel 1
-		constraints.gridy=3;
+		constraints.gridy = 3;
 		constraints.gridx = 0;
 		addAPatternMain.add(jLWhoFor, constraints);
-		constraints.gridx=1;
+		constraints.gridx = 1;
 		for (int i = 0; i < jCBwhofor.length; i++) {
 			jCBwhofor[i] = new JCheckBox(patternWho[i]);
 			addAPatternMain.add(jCBwhofor[i], constraints);
 			constraints.gridx++;
 		}
 		// bases the pattern is suitable for added to panel 1
-		constraints.gridy=4;
+		constraints.gridy = 4;
 		constraints.gridx = 0;
 		addAPatternMain.add(jlBaseSelector, constraints);
 		constraints.gridx++;
@@ -166,19 +241,19 @@ public class PatternConstructor extends JFrame {
 			constraints.gridx++;
 		}
 		// add stretch requirements
-		constraints.gridy=5;
+		constraints.gridy = 5;
 		constraints.gridx = 0;
 		addAPatternMain.add(jLMinStretch, constraints);
 		constraints.gridx++;
 		addAPatternMain.add(jTMinStretch, constraints);
-		constraints.gridy=6;
-		constraints.gridx=0;
+		constraints.gridy = 6;
+		constraints.gridx = 0;
 		addAPatternMain.add(jLMaxStretch, constraints);
 		constraints.gridx++;
 		addAPatternMain.add(jTMaxStretch, constraints);
 
 		// add yardage
-		constraints.gridy=7;
+		constraints.gridy = 7;
 		constraints.gridx = 0;
 		addAPatternMain.add(jLYardagePrompt, constraints);
 		constraints.gridx++;
@@ -187,7 +262,7 @@ public class PatternConstructor extends JFrame {
 		// add buttons to group
 		groupYesNo.add(yes);
 		groupYesNo.add(no);
-		
+
 		ActionListener yesSplitListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -198,40 +273,36 @@ public class PatternConstructor extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				splitYardagePanel.setVisible(false);
-				// look at generic-ing it so that fabric constructor and pattern constructor both use the same method and it may be reused other places as well. see tablet for details
+				// look at generic-ing it so that fabric constructor and pattern constructor
+				// both use the same method and it may be reused other places as well. see
+				// tablet for details
 				Utility.clearFields(splitYardagePanel);
-				
-				//add a way to either erase any input given if yes to no or ignore input
+
+				// add a way to either erase any input given if yes to no or ignore input
 			}
 		};
-		ActionListener continueListener= new ActionListener() {
+		ActionListener continueListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showConfirmDialog(patternList);
+				showConfirmDialog(patternSave);
 			}
 
-			
 		};
 		yes.addActionListener(yesSplitListener);
 		no.addActionListener(noSplitListener);
-		
-	
-		constraints.gridy=8;
-		constraints.gridx=0;
-		addAPatternMain.add(jLSplitYardagePrompt,constraints);
+
+		constraints.gridy = 8;
+		constraints.gridx = 0;
+		addAPatternMain.add(jLSplitYardagePrompt, constraints);
 		constraints.gridx++;
 		addAPatternMain.add(yes, constraints);
 		constraints.gridx++;
 		addAPatternMain.add(no, constraints);
-		
+	}
+
+	private void showConfirmDialog(SaveFile<Pattern> patternSave) {
+		// get values and package into a new panel to pass to show confirm dialog
 
 	}
-	//public void clearFields() {
 
-	private void showConfirmDialog(ArrayList<Pattern> patternList) {
-		// get values and package into a new panel to pass to show confirm dialog
-		
-	}	
-		
-	
 }

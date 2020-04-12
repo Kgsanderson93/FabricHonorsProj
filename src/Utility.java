@@ -1,8 +1,10 @@
 import java.awt.Component;
+import java.awt.Container;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -10,11 +12,15 @@ import javax.swing.JTextField;
 public class Utility {
 
 
-public static void clearFields(JPanel panel) {
+public static void clearFields(Container container) {
 	
 	
-	 for(Component c : panel.getComponents()){ {
-		if(c instanceof JTextField) {
+	 for(Component c : container.getComponents()){
+		 if(c instanceof Container) {
+			Container cont= (Container)c;
+			clearFields(cont);
+		 }
+		 else if(c instanceof JTextField) {
 			JTextField item=(JTextField)c;
 			item.setText("");				
 		}
@@ -32,6 +38,6 @@ public static void clearFields(JPanel panel) {
 			box2.setSelected(false);
 		}
 	}
-}
+
 }
 }

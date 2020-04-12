@@ -21,30 +21,31 @@ public class FirstWindow extends JFrame {
 	private static final int DEFAULT_X_SIZE = 400;
 	private static final int DEFAULT_Y_SIZE = 400;
 
-	public FirstWindow(ArrayList<Fabric> fabricList, ArrayList<Pattern> patternList) {
+	public FirstWindow(SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
 		// make actionlisteners for buttons{
 		ActionListener addFabricListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showfabricconstructor(fabricList);
+				showfabricconstructor(fabricSave);
 			}
 
 		};
 		ActionListener addPatternListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showPatternConstructor(fabricList, patternList);
+				showPatternConstructor(fabricSave, patternSave);
 			}
 		};
 		ActionListener browseFabricListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				ArrayList<Fabric> fabricList=fabricSave.getInventory();
 				for (Fabric fabric : fabricList)
 					System.out.println(fabric.toString());
 			}
 		};
 		ActionListener browsePatternListener = new ActionListener() {
-			@Override
+			ArrayList<Pattern> patternList=patternSave.getInventory();
 			public void actionPerformed(ActionEvent e) {
 				for (Pattern pattern : patternList)
 					System.out.println(pattern.toString());
@@ -84,12 +85,12 @@ public class FirstWindow extends JFrame {
 
 	}
 
-	private void showPatternConstructor(ArrayList<Fabric> fabricList, ArrayList<Pattern> patternList) {
-		PatternConstructor pc = new PatternConstructor(fabricList, patternList);
+	private void showPatternConstructor(SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
+		PatternConstructor pc = new PatternConstructor(fabricSave, patternSave);
 
 	}
 
-	private void showfabricconstructor(ArrayList<Fabric> fabricList) {
-		FabricConstructor fc = new FabricConstructor(this, fabricList);
+	private void showfabricconstructor(SaveFile<Fabric> fabricSave) {
+		FabricConstructor fc = new FabricConstructor(this, fabricSave);
 	}
 }

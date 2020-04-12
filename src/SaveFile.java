@@ -9,35 +9,37 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class SaveFile<E> {
-	
+
 	private ArrayList<E> currentList = new ArrayList<>();
-	
+	private String saveLocation;
+
 	public SaveFile() {
-		
+
 	}
-	
+
 	public SaveFile(ArrayList<E> elements) {
 		this.currentList.addAll(elements);
 	}
-	
+
 	public void add(E element) {
 		currentList.add(element);
 	}
-	
-	public ArrayList<E> callInventory(String fileLocation) throws IOException, ClassNotFoundException{
-		ArrayList<E> patternList;
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<E> callInventory(String fileLocation) throws IOException, ClassNotFoundException {
+		ArrayList<E> objectList;
 		ObjectInputStream ois = null;
 		FileInputStream fis = null;
 		try {
 			fis = new FileInputStream(fileLocation);
 			ois = new ObjectInputStream(fis);
-			patternList = (ArrayList<E>) ois.readObject();
+			objectList = (ArrayList<E>) ois.readObject();
 		} catch (EOFException eof) {
 			System.err.println("No Object found in file");
-			patternList = new ArrayList<>();
+			objectList = new ArrayList<>();
 		} catch (FileNotFoundException fnf) {
 			System.err.println("Save file doesn't exist: Creating new Inventory.");
-			patternList = new ArrayList<>();
+			objectList = new ArrayList<>();
 		} finally {
 			if (fis != null) {
 				fis.close();
@@ -46,15 +48,27 @@ public class SaveFile<E> {
 				ois.close();
 			}
 		}
-     
-		return patternList;
-	}
-	
-	public void saveInventory(String fileLocation) throws IOException {
-		FileOutputStream fos = new FileOutputStream(new File(fileLocation));
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(currentList);
-        oos.close();
+		this.currentList = objectList;
+		setSaveLocation(fileLocation);
+		return objectList;
 	}
 
+	public void saveInventory(String fileLocation) throws IOException {
+		FileOutputStream fos = new FileOutputStream(new File(fileLocation));
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(currentList);
+		oos.close();
+	}
+
+	public ArrayList<E> getInventory() {
+		return currentList;
+	}
+
+	public String getSaveLocation() {
+		return saveLocation;
+	}
+
+	public void setSaveLocation(String saveLocation) {
+		this.saveLocation = saveLocation;
+	}
 }
