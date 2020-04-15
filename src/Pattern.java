@@ -78,4 +78,12 @@ public Pattern() {
 	
 
 }
+public Pattern(String name2, String patternTypesSelected, String whofor, double yardage2, String base2, int minStretch,
+		int maxStretch) {
+	// TODO Auto-generated constructor stub
+}
+public Pattern(String name2, String patternTypesSelected, String whofor, double yardage2, String base2, int minStretch,
+		int maxStretch, int mainFabric2, int contrastFabric2, int bandFabric2) {
+	// TODO Auto-generated constructor stub
+}
 }

@@ -86,10 +86,12 @@ public class FirstWindow extends JFrame {
 	}
 
 	private void showPatternConstructor(SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
+		@SuppressWarnings("unused")
 		PatternConstructor pc = new PatternConstructor(fabricSave, patternSave);
 
 	}
 
+	@SuppressWarnings("unused")
 	private void showfabricconstructor(SaveFile<Fabric> fabricSave) {
 		FabricConstructor fc = new FabricConstructor(this, fabricSave);
 	}

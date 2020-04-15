@@ -136,6 +136,7 @@ public class FabricConstructor extends JFrame {
 		int stretch = getStretch();
 		String baseSelection = getFabricBase();
 		String selected = getSelectedNames();
+		
 		Fabric newFabric = new Fabric(fabricName, yardage, baseSelection, stretch, selected);
 
 		JPanel displayInfo2Confirm = new JPanel();
@@ -155,7 +156,7 @@ public class FabricConstructor extends JFrame {
 		displayInfo2Confirm.add(jlYardage);
 		@SuppressWarnings("unused")
 		ConfirmationDialog<Fabric> confirmationDialog = new ConfirmationDialog<Fabric>(this, fabricSave, displayInfo2Confirm,
-				newFabric);
+				newFabric, "Add A Fabric");
 		// Add the Fabric to the Inventory
 
 	}

@@ -3,9 +3,6 @@ import java.awt.Container;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
@@ -35,5 +32,20 @@ public class Utility {
 
 		}
 
+	}
+	public static String arrayToString(String[] array) {
+		String str="";
+		for(int i=0; i<array.length;i++)
+			str+=array[i];
+		return str;
+		
+	}
+	public static boolean checkIfValid(String string) {
+		boolean isValid=true;
+		if (string.equals(null)) {
+			isValid=false;
+		}
+		return isValid;
+		
 	}
 }

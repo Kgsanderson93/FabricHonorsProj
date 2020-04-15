@@ -6,7 +6,7 @@
 //confirm should allow the original button being pressed to continue
 // dump should reset the window the original button came from 
 
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +24,7 @@ public class ConfirmationDialog<e> {
 	private ArrayList<e> saveFile;
 	private e newE;
 
-	public ConfirmationDialog(JFrame parent, SaveFile<e> saveFile, JPanel displayInfo2Confirm,e newE) {
+	public ConfirmationDialog(JFrame parent, SaveFile<e> saveFile, JPanel displayInfo2Confirm,e newE, String title) {
 		this.setNewE(newE);
 		this.setParent(parent);
 		this.setSaveFile(saveFile.getInventory());
@@ -33,10 +33,9 @@ public class ConfirmationDialog<e> {
 		popup.setSize(560, 200);
 		popup.setLocationRelativeTo(null);
 		popup.setVisible(true);
+		LayoutManager layout = new BorderLayout();
 
-		LayoutManager layout = new FlowLayout();
-
-		JLabel confirmPrompt = new JLabel("Is this correct? Press Yes to save and No to return to");
+		JLabel confirmPrompt = new JLabel("Is this correct? Press Yes to save and No to return to"+ title);
 //change to +class?
 		
 		JButton yesButton = new JButton("yes");
