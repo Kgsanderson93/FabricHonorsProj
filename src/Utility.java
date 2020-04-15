@@ -15,7 +15,11 @@ public class Utility {
 				Container cont = (Container) c;
 				clearFields(cont);
 			}
-			if (c instanceof JTextField) {
+			if (c instanceof JNumberField) {
+				JNumberField item = (JNumberField) c;
+				item.setText("0");
+			}
+			else if (c instanceof JTextField) {
 				JTextField item = (JTextField) c;
 				item.setText("");
 			} else if (c instanceof JComboBox) {

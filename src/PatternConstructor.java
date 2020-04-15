@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+
 public class PatternConstructor extends JFrame {
 
 	/**
@@ -50,16 +51,16 @@ public class PatternConstructor extends JFrame {
 	private String[] patternWho = { "Men", "Women", "Children", "Baby", "Other" };
 	private JCheckBox[] jCBwhofor = new JCheckBox[patternWho.length];
 
-	private int minStretch = 30;
-	private int maxStretch = 100;
+	private int minStretch = 0;
+	private int maxStretch = 200;
 	private JLabel jLMinStretch = new JLabel("Please enter the minimum stretch");
 	private JLabel jLMaxStretch = new JLabel("please enter the maximum stretch");
-	private JTextField jTMinStretch = new JTextField();
-	private JTextField jTMaxStretch = new JTextField();
+	private JTextField jTMinStretch = new JNumberField();
+	private JTextField jTMaxStretch = new JNumberField();
 
 	private double yardage;
 	private JLabel jLYardagePrompt = new JLabel("how many yards does this pattern require");
-	private JTextField jTYardageInput = new JTextField();
+	private JTextField jTYardageInput = new JNumberField();
 
 	private boolean splitYardage;
 	private JLabel jLSplitYardagePrompt = new JLabel(
@@ -70,15 +71,15 @@ public class PatternConstructor extends JFrame {
 
 	private int contrastFabric;
 	private JLabel jLContrastYardagePrompt = new JLabel("how many yards of this pattern will be the contrast fabric");
-	private JTextField jTContrastYardageInput = new JTextField();
+	private JNumberField jTContrastYardageInput = new JNumberField();
 
 	private int mainFabric;
 	private JLabel jLMainYardagePrompt = new JLabel("how many yards of this pattern will be the main fabric");
-	private JTextField jTMainYardageInput = new JTextField();
+	private JTextField jTMainYardageInput = new JNumberField();
 
 	private int bandFabric;
 	private JLabel jLBandYardagePrompt = new JLabel("How many yards of this pattern will be used as banding");
-	private JTextField jTBandYardageInput = new JTextField();
+	private JTextField jTBandYardageInput = new JNumberField();
 
 	private JLabel prompt = new JLabel("Please enter the Details of this Pattern");
 	private JButton add = new JButton("Continue to fabric selection");
@@ -366,12 +367,19 @@ public class PatternConstructor extends JFrame {
 		setWhofor(getSelectedBoxes(jCBwhofor));
 		setPatternTypesSelected(getSelectedBoxes(jCBPatternTypes));
 		setSplityardage(isSplityardage());
+		try {
 		setMinStretch(Integer.parseInt(jTMinStretch.getText()));
 		setMaxStretch(Integer.parseInt(jTMaxStretch.getText()));
 		setYardage(Integer.parseInt(jTYardageInput.getText()));
 		setContrastFabric(Integer.parseInt(jTContrastYardageInput.getText()));
 		setMainFabric(Integer.parseInt(jTMainYardageInput.getText()));
 		setBandFabric(Integer.parseInt(jTBandYardageInput.getText()));
+		}
+		catch(NumberFormatException e) {
+			@SuppressWarnings("unused")
+			InvalidDialog popup = new InvalidDialog();
+			e.printStackTrace();
+		}
 		populated=true;
 	}
 		return populated;
@@ -431,8 +439,11 @@ public class PatternConstructor extends JFrame {
 	}
 
 	public boolean tryAdd() {
-		populateFields();
-		boolean created = createNewPattern();
+		boolean created=false;
+		boolean populate =populateFields();
+		if (populate==true) {
+			created = createNewPattern();
+		}
 		return created;
 	}
 	}
