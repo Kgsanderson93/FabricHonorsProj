@@ -6,19 +6,22 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class InvalidDialog {
 	public InvalidDialog() {
 	JFrame popup = new JFrame("is this correct?");
+	JPanel stuff= new JPanel();
 	popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	popup.setSize(560, 200);
 	popup.setLocationRelativeTo(null);
 	popup.setVisible(true);
 	@SuppressWarnings("unused")
 	LayoutManager layout = new BorderLayout();
+	popup.setContentPane(stuff);
 	
 	JLabel warning= new JLabel("Both a name and yardage amount must be specified. Please check input and try again.");
-	popup.add(warning);
+	stuff.add(warning);
 	JButton ok= new JButton("ok");
 	ActionListener okButtonListener = new ActionListener() {
 		@Override
@@ -27,7 +30,7 @@ public class InvalidDialog {
 		}
 	};
 	ok.addActionListener(okButtonListener);
-	popup.add(ok);
+	stuff.add(ok);
 	
 	}
 }

@@ -420,7 +420,7 @@ public class PatternConstructor extends JFrame {
 
 	public boolean createNewPattern() {
 		boolean created = false;
-		if (name.contentEquals(null) || yardage == 0) {
+		if (name==null || yardage == 0) {
 			@SuppressWarnings("unused")
 			InvalidDialog popup = new InvalidDialog();
 			created = false;
