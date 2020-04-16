@@ -84,7 +84,7 @@ public class PatternConstructor extends JFrame {
 	private JLabel prompt = new JLabel("Please enter the Details of this Pattern");
 	private JButton add = new JButton("Continue to fabric selection");
 	private Pattern newPattern = null;
-	private JPanel info2display = new JPanel();
+	private JPanel info2display;
 	
 	public PatternConstructor(SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
 		// create panel, layout and layout constraints
@@ -387,7 +387,7 @@ public class PatternConstructor extends JFrame {
 
 	public JPanel confirmationPanel() {
 		// create Panel(maybe own method?) and JLabels
-		
+		info2display= new JPanel();
 		JLabel jLNameEntered = new JLabel(getName());
 		JLabel jLBaseSelected = new JLabel(getBase());
 		JLabel jLWhoForSelected = new JLabel(getWhofor());
