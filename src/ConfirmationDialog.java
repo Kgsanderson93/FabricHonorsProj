@@ -7,6 +7,7 @@
 // dump should reset the window the original button came from 
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +34,7 @@ public class ConfirmationDialog<e> {
 		popup.setSize(560, 200);
 		popup.setLocationRelativeTo(null);
 		popup.setVisible(true);
-		LayoutManager layout = new BorderLayout();
+		LayoutManager layout = new FlowLayout();
 
 		JLabel confirmPrompt = new JLabel("Is this correct? Press Yes to save and No to return to"+ title);
 //change to +class?
@@ -44,6 +45,8 @@ public class ConfirmationDialog<e> {
 		displayInfo2Confirm.setLayout(layout);
 		popup.add(confirmPrompt);
 		popup.add(displayInfo2Confirm);
+		popup.setContentPane(displayInfo2Confirm);
+		
 
 		ActionListener addButtonListeneryes = new ActionListener() {
 			@Override
