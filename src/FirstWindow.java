@@ -26,7 +26,7 @@ public class FirstWindow extends JFrame {
 		ActionListener addFabricListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showfabricconstructor(fabricSave);
+				showfabricconstructor(fabricSave, patternSave);
 			}
 
 		};
@@ -92,7 +92,7 @@ public class FirstWindow extends JFrame {
 	}
 
 	@SuppressWarnings("unused")
-	private void showfabricconstructor(SaveFile<Fabric> fabricSave) {
-		FabricConstructor fc = new FabricConstructor(this, fabricSave);
+	private void showfabricconstructor(SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
+		FabricConstructor fc = new FabricConstructor(this, fabricSave, patternSave);
 	}
 }

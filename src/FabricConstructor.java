@@ -45,7 +45,7 @@ public class FabricConstructor extends JFrame {
 	private JCheckBox[] boxes = new JCheckBox[Fabric.ALL_USES.length]; // Each checkbox will get a name of garment from
 																		// suitablefor array.
 	
-	public FabricConstructor(FirstWindow parent, SaveFile<Fabric> fabricSave) {
+	public FabricConstructor(FirstWindow parent, SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
 		GridBagLayout layout = new GridBagLayout();
 		JPanel addAFabric = new JPanel(layout);
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -92,7 +92,7 @@ public class FabricConstructor extends JFrame {
 		ActionListener addButtonListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showConfirmDialog(fabricSave);
+				showConfirmDialog(fabricSave, patternSave);
 			}
 		};
 
@@ -130,7 +130,7 @@ public class FabricConstructor extends JFrame {
 		return selected;
 	}
 
-	public void showConfirmDialog(SaveFile<Fabric> fabricSave) {
+	public void showConfirmDialog(SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
 		String fabricName = getFabricName();
 		double yardage = getYardage();
 		int stretch = getStretch();
@@ -155,7 +155,7 @@ public class FabricConstructor extends JFrame {
 		displayInfo2Confirm.add(jlStretch);
 		displayInfo2Confirm.add(jlYardage);
 		@SuppressWarnings("unused")
-		ConfirmationDialog<Fabric> confirmationDialog = new ConfirmationDialog<Fabric>(this, fabricSave, displayInfo2Confirm,
+		ConfirmationDialog<Fabric, Pattern> confirmationDialog = new ConfirmationDialog<Fabric,Pattern>(this, fabricSave,patternSave, displayInfo2Confirm,
 				newFabric, "Add A Fabric");
 		// Add the Fabric to the Inventory
 

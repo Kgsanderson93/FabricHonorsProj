@@ -20,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-
 public class PatternConstructor extends JFrame {
 
 	/**
@@ -69,23 +68,22 @@ public class PatternConstructor extends JFrame {
 	private JRadioButton no = new JRadioButton("no");
 	private ButtonGroup groupYesNo = new ButtonGroup();
 
-	private int contrastFabric;
+	private double contrastFabric;
 	private JLabel jLContrastYardagePrompt = new JLabel("how many yards of this pattern will be the contrast fabric");
 	private JNumberField jTContrastYardageInput = new JNumberField();
 
-	private int mainFabric;
+	private double mainFabric;
 	private JLabel jLMainYardagePrompt = new JLabel("how many yards of this pattern will be the main fabric");
 	private JTextField jTMainYardageInput = new JNumberField();
 
-	private int bandFabric;
+	private double bandFabric;
 	private JLabel jLBandYardagePrompt = new JLabel("How many yards of this pattern will be used as banding");
 	private JTextField jTBandYardageInput = new JNumberField();
 
 	private JLabel prompt = new JLabel("Please enter the Details of this Pattern");
 	private JButton add = new JButton("Continue to fabric selection");
 	private Pattern newPattern = null;
-	private JPanel info2display;
-	
+
 	public PatternConstructor(SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
 		// create panel, layout and layout constraints
 		GridBagLayout layout = new GridBagLayout();
@@ -206,7 +204,7 @@ public class PatternConstructor extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean tryAdd = tryAdd();
 				if (tryAdd == true) {
-					showConfirmDialog(patternSave);
+					showConfirmDialog(patternSave, fabricSave);
 				}
 
 			}
@@ -228,11 +226,12 @@ public class PatternConstructor extends JFrame {
 		addAPatternMain.add(add, constraints);
 	}
 
-	private void showConfirmDialog(SaveFile<Pattern> patternSave) {
+	private void showConfirmDialog(SaveFile<Pattern> patternSave, SaveFile<Fabric> fabricSave) {
+
+		JPanel info2display = confirmationPanel();
 		@SuppressWarnings("unused")
-		ConfirmationDialog<Pattern> confirmationDialog = new ConfirmationDialog<Pattern>(this, patternSave, info2display,
-				newPattern, "Add A Pattern");
-		
+		ConfirmationDialog<Pattern, Fabric> confirmationDialog = new ConfirmationDialog<Pattern, Fabric>(this, patternSave, fabricSave,
+				info2display, newPattern, "Add A Pattern");
 
 	}
 
@@ -250,10 +249,12 @@ public class PatternConstructor extends JFrame {
 	public boolean getSplitYardage() {
 		return splitYardage;
 	}
+
 	@Override
 	public String getName() {
 		return name;
 	}
+
 	@Override
 	public void setName(String name) {
 		this.name = name;
@@ -317,26 +318,27 @@ public class PatternConstructor extends JFrame {
 		this.yardage = yardage;
 	}
 
-	public int getContrastFabric() {
+	public double getContrastFabric() {
 		return contrastFabric;
 	}
-	public void setContrastFabric(int contrastFabric) {
-		this.contrastFabric = contrastFabric;
+
+	public void setContrastFabric(double d) {
+		this.contrastFabric = d;
 	}
 
-	public int getMainFabric() {
+	public double getMainFabric() {
 		return mainFabric;
 	}
 
-	public void setMainFabric(int mainFabric) {
+	public void setMainFabric(double mainFabric) {
 		this.mainFabric = mainFabric;
 	}
 
-	public int getBandFabric() {
+	public double getBandFabric() {
 		return bandFabric;
 	}
 
-	public void setBandFabric(int bandFabric) {
+	public void setBandFabric(double bandFabric) {
 		this.bandFabric = bandFabric;
 	}
 
@@ -347,57 +349,60 @@ public class PatternConstructor extends JFrame {
 				selected = selected + " " + (box.getText());
 		return selected;
 	}
+
 	public Pattern getNewPattern() {
 		return newPattern;
 	}
+
 	private void setNewPattern(Pattern pattern) {
-		newPattern=pattern;	
+		newPattern = pattern;
 	}
-	
+
 	public boolean populateFields() {
 		boolean populated = false;
 		if (jTNameInput.getText().equals(null) || jTYardageInput.getText().equals(null)) {
 			@SuppressWarnings("unused")
-			InvalidDialog popup = new InvalidDialog();
+			InvalidDialog popup = new InvalidDialog("Both a name and yardage amount must be specified. \n");
 			populated = false;
+		} else {
+			setName(jTNameInput.getText());
+			setBase(getSelectedBoxes(jCBfabricBase));
+			setWhofor(getSelectedBoxes(jCBwhofor));
+			setPatternTypesSelected(getSelectedBoxes(jCBPatternTypes));
+			setSplityardage(isSplityardage());
+			try {
+				setMinStretch(Integer.parseInt(jTMinStretch.getText()));
+				setMaxStretch(Integer.parseInt(jTMaxStretch.getText()));
+				setYardage(Double.parseDouble(jTYardageInput.getText()));
+				setContrastFabric(Double.parseDouble(jTContrastYardageInput.getText()));
+				setMainFabric(Double.parseDouble(jTMainYardageInput.getText()));
+				setBandFabric(Double.parseDouble(jTBandYardageInput.getText()));
+			} catch (NumberFormatException e) {
+				@SuppressWarnings("unused")
+				InvalidDialog popup = new InvalidDialog("Numbers cannot be left blank. Please enter a valid number\n");
+				e.printStackTrace();
+			}
+			populated = true;
 		}
-		else {
-		setName(jTNameInput.getText());
-		setBase(getSelectedBoxes(jCBfabricBase));
-		setWhofor(getSelectedBoxes(jCBwhofor));
-		setPatternTypesSelected(getSelectedBoxes(jCBPatternTypes));
-		setSplityardage(isSplityardage());
-		try {
-		setMinStretch(Integer.parseInt(jTMinStretch.getText()));
-		setMaxStretch(Integer.parseInt(jTMaxStretch.getText()));
-		setYardage(Integer.parseInt(jTYardageInput.getText()));
-		setContrastFabric(Integer.parseInt(jTContrastYardageInput.getText()));
-		setMainFabric(Integer.parseInt(jTMainYardageInput.getText()));
-		setBandFabric(Integer.parseInt(jTBandYardageInput.getText()));
-		}
-		catch(NumberFormatException e) {
-			@SuppressWarnings("unused")
-			InvalidDialog popup = new InvalidDialog();
-			e.printStackTrace();
-		}
-		populated=true;
-	}
 		return populated;
 	}
 
 	public JPanel confirmationPanel() {
-		// create Panel(maybe own method?) and JLabels
-		info2display= new JPanel();
-		JLabel jLNameEntered = new JLabel(getName());
-		JLabel jLBaseSelected = new JLabel(getBase());
-		JLabel jLWhoForSelected = new JLabel(getWhofor());
-		JLabel jLPatternTypesSelected = new JLabel(getPatternTypesSelected());
-		JLabel jLMaxStretchEntered = new JLabel(String.valueOf(getMaxStretch()));
-		JLabel jLMinStretchEntered = new JLabel(String.valueOf(getMinStretch()));
-		JLabel jLYardageEntered = new JLabel(String.valueOf(getYardage()));
+		// create Panel and JLabels
+		JPanel info2display = new JPanel();
+		JLabel jLNameEntered = new JLabel("You have named the pattern: " + getName());
+		JLabel jLBaseSelected = new JLabel("You reported this pattern works with these bases:" + getBase());
+		JLabel jLWhoForSelected = new JLabel("You have indicated this pattern works for: " + getWhofor());
+		JLabel jLPatternTypesSelected = new JLabel(
+				"You have indicated this pattern creates these types of items: " + getPatternTypesSelected());
+		JLabel jLMaxStretchEntered = new JLabel(
+				"You reported a range of stretch from: " + String.valueOf(getMaxStretch()));
+		JLabel jLMinStretchEntered = new JLabel(" to: " + String.valueOf(getMinStretch()));
+		JLabel jLYardageEntered = new JLabel("The pattern requires:" + String.valueOf(getYardage()) + " yards");
 		boolean split = getSplitYardage();
-		JLabel jLMainFabricEntered = new JLabel(String.valueOf(getMainFabric()));
-		JLabel jLContrastFabricEntered = new JLabel(String.valueOf(getContrastFabric()));
+		JLabel jLMainFabricEntered = new JLabel("The patterns main fabric requirement is: "
+				+ String.valueOf(getMainFabric()) + "\n *note if yardage is not split all fabric is main fabric");
+		JLabel jLContrastFabricEntered = new JLabel("" + String.valueOf(getContrastFabric()));
 		JLabel jLBandFabricEntered = new JLabel(String.valueOf(getBandFabric()));
 		// add Labels to Panel
 		info2display.add(jLNameEntered);
@@ -407,9 +412,9 @@ public class PatternConstructor extends JFrame {
 		info2display.add(jLYardageEntered);
 		info2display.add(jLMinStretchEntered);
 		info2display.add(jLMaxStretchEntered);
+		info2display.add(jLMainFabricEntered);
 		// check split to add additional Labels
 		if (split == true) {
-			info2display.add(jLMainFabricEntered);
 			info2display.add(jLContrastFabricEntered);
 			info2display.add(jLBandFabricEntered);
 
@@ -420,9 +425,9 @@ public class PatternConstructor extends JFrame {
 
 	public boolean createNewPattern() {
 		boolean created = false;
-		if (name==null || yardage == 0) {
+		if (name == null || yardage == 0) {
 			@SuppressWarnings("unused")
-			InvalidDialog popup = new InvalidDialog();
+			InvalidDialog popup = new InvalidDialog("Both a name and yardage amount must be specified. \n");
 			created = false;
 		} else {
 			if (splitYardage == false) {
@@ -439,11 +444,26 @@ public class PatternConstructor extends JFrame {
 	}
 
 	public boolean tryAdd() {
-		boolean created=false;
-		boolean populate =populateFields();
-		if (populate==true) {
-			created = createNewPattern();
+		boolean created = false;
+		boolean populate = populateFields();
+		double main = getMainFabric();
+		double band = getBandFabric();
+		double contrast = getContrastFabric();
+		double yardage = getYardage();
+		if (main + band + contrast <= yardage) {
+			if (minStretch < maxStretch) {
+				if (populate == true) {
+					created = createNewPattern();
+				}
+			} else {
+				@SuppressWarnings("unused")
+				InvalidDialog dialog = new InvalidDialog("Minimum stretch cannot be greater than Maximum stretch");
+			}
+		} else {
+			@SuppressWarnings("unused")
+			InvalidDialog dialog = new InvalidDialog(
+					"main contrast and band fabric must be equal to yardage specified");
 		}
 		return created;
 	}
-	}
+}

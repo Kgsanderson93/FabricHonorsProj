@@ -9,18 +9,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class InvalidDialog {
-	public InvalidDialog() {
+	public InvalidDialog(String string) {
 	JFrame popup = new JFrame("is this correct?");
 	JPanel stuff= new JPanel();
 	popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	popup.setSize(560, 200);
+	popup.setSize(1230, 200);
 	popup.setLocationRelativeTo(null);
 	popup.setVisible(true);
 	@SuppressWarnings("unused")
 	LayoutManager layout = new BorderLayout();
 	popup.setContentPane(stuff);
 	
-	JLabel warning= new JLabel("Both a name and yardage amount must be specified. Please check input and try again.");
+	JLabel warning= new JLabel(string+" Please check input and try again.");
 	stuff.add(warning);
 	JButton ok= new JButton("ok");
 	ActionListener okButtonListener = new ActionListener() {

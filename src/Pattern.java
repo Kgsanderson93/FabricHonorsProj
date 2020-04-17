@@ -23,6 +23,43 @@ public class Pattern implements Serializable {
 	private final String[] patternTypes = { "Shirt", "Dress", "Pants", "Swim", "Lingerie", "Pjs", "Bags", "Toys", "Romper" };
 	private final String[] fabricBaseLabels = { "Double Brushed Poly", "Cotton Lycra", "French Terry", "Rayon", "Denim" };
 	private final String[] patternWho = { "Men", "Women", "Children", "Baby", "Other" };
+	
+
+	public Pattern() {
+
+	}
+
+	public Pattern(String name2, String patternTypesSelected, String whofor, double yardage2, String base2,
+			int minStretch, int maxStretch) {
+		this.name = name2;
+		this.patternType = patternTypesSelected;
+		this.whoFor = whofor;
+		this.yardage = yardage2;
+		this.base = base2;
+		this.minStretch = minStretch;
+		this.maxStretch = maxStretch;
+		this.mainFabric = yardage2;
+
+		
+	}
+
+	public Pattern(String name2, String patternTypesSelected, String whofor, double yardage2, String base2,
+			int minStretch, int maxStretch, double mainFabric2, double contrastFabric2, double bandFabric2) {
+		this.name = name2;
+		this.patternType = patternTypesSelected;
+		this.whoFor = whofor;
+		this.yardage = yardage2;
+		this.base = base2;
+		this.minStretch = minStretch;
+		this.maxStretch = maxStretch;
+		this.mainFabric = mainFabric2;
+		this.contrastFabric=contrastFabric2;
+		this.bandFabric=bandFabric2;
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 
 	public String getName() {
 		return name;
@@ -56,12 +93,12 @@ public class Pattern implements Serializable {
 		this.yardage = yardage;
 	}
 
-	public int getStretch() {
+	public int getMinStretch() {
 		return minStretch;
 	}
 
-	public void setStretch(int stretch) {
-		this.minStretch = stretch;
+	public void setMinStretch(int minStretch) {
+		this.minStretch = minStretch;
 	}
 
 	public double getContrastFabric() {
@@ -111,6 +148,19 @@ public class Pattern implements Serializable {
 	public void setWhoFor(String whoFor) {
 		this.whoFor = whoFor;
 	}
+	public String[] getPatternTypes() {
+		return patternTypes;
+	}
+
+	public String[] getFabricBaseLabels() {
+		return fabricBaseLabels;
+	}
+
+	public String[] getPatternWho() {
+		return patternWho;
+	}
+
+
 
 	@Override
 	public String toString() {
@@ -118,39 +168,6 @@ public class Pattern implements Serializable {
 				+ minStretch + "\n\t Max stretch=" + maxStretch + "\n\t Who it's for=" + whoFor + "\n\t Pattern Type="
 				+ patternType + "\n\t Main Fabric=" + mainFabric + "\n\t contrast Fabric=" + contrastFabric
 				+ "\n\t Band Fabric=" + bandFabric + "\n}";
-	}
-
-	public Pattern() {
-
-	}
-
-	public Pattern(String name2, String patternTypesSelected, String whofor, double yardage2, String base2,
-			int minStretch, int maxStretch) {
-		this.name = name2;
-		this.patternType = patternTypesSelected;
-		this.whoFor = whofor;
-		this.yardage = yardage2;
-		this.base = base2;
-		this.minStretch = minStretch;
-		this.maxStretch = maxStretch;
-		this.mainFabric = yardage2;
-
-		
-	}
-
-	public Pattern(String name2, String patternTypesSelected, String whofor, double yardage2, String base2,
-			int minStretch, int maxStretch, int mainFabric2, int contrastFabric2, int bandFabric2) {
-		this.name = name2;
-		this.patternType = patternTypesSelected;
-		this.whoFor = whofor;
-		this.yardage = yardage2;
-		this.base = base2;
-		this.minStretch = minStretch;
-		this.maxStretch = maxStretch;
-		this.mainFabric = mainFabric2;
-		this.contrastFabric=contrastFabric2;
-		this.bandFabric=bandFabric2;
-		// TODO Auto-generated constructor stub
 	}
 
 }

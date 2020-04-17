@@ -6,7 +6,7 @@
 //confirm should allow the original button being pressed to continue
 // dump should reset the window the original button came from 
 
-import java.awt.BorderLayout;
+
 import java.awt.FlowLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
@@ -20,12 +20,13 @@ import javax.swing.JLabel;
 
 import javax.swing.JPanel;
 
-public class ConfirmationDialog<e> {
+public class ConfirmationDialog<e, f> {
 	private JFrame parent;
 	private ArrayList<e> saveFile;
 	private e newE;
 
-	public ConfirmationDialog(JFrame parent, SaveFile<e> saveFile, JPanel displayInfo2Confirm,e newE, String title) {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ConfirmationDialog(JFrame parent, SaveFile<e> saveFile,SaveFile<f> saveFile2 ,JPanel displayInfo2Confirm,e newE, String title) {
 		this.setNewE(newE);
 		this.setParent(parent);
 		this.setSaveFile(saveFile.getInventory());
@@ -42,10 +43,9 @@ public class ConfirmationDialog<e> {
 		JButton yesButton = new JButton("yes");
 		JButton noButton = new JButton("no");
 		popup.setLayout(layout);
-		displayInfo2Confirm.setLayout(layout);
 		popup.add(confirmPrompt);
 		popup.add(displayInfo2Confirm);
-		popup.setContentPane(displayInfo2Confirm);
+		
 		
 
 		ActionListener addButtonListeneryes = new ActionListener() {
@@ -69,6 +69,12 @@ public class ConfirmationDialog<e> {
 		noButton.addActionListener(addButtonListenerno);
 		popup.add(yesButton);
 		popup.add(noButton);
+		
+		if(newE instanceof Pattern) {
+			Pattern newPattern=(Pattern)newE;
+			@SuppressWarnings("unused")
+			HitList newPatternHits= new HitList(newPattern, saveFile2);
+		}
 		
 	}
 
