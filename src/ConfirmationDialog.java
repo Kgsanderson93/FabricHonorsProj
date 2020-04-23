@@ -20,13 +20,13 @@ import javax.swing.JLabel;
 
 import javax.swing.JPanel;
 
-public class ConfirmationDialog<e, f> {
+public class ConfirmationDialog<E, f> {
 	private JFrame parent;
-	private ArrayList<e> saveFile;
-	private e newE;
+	private ArrayList<E> saveFile;
+	private E newE;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public ConfirmationDialog(JFrame parent, SaveFile<e> saveFile,SaveFile<f> saveFile2 ,JPanel displayInfo2Confirm,e newE, String title) {
+	public ConfirmationDialog(JFrame parent, SaveFile<E> saveFile,SaveFile<f> saveFile2 ,JPanel displayInfo2Confirm,E newE, String title) {
 		this.setNewE(newE);
 		this.setParent(parent);
 		this.setSaveFile(saveFile.getInventory());
@@ -78,7 +78,7 @@ public class ConfirmationDialog<e, f> {
 		
 	}
 
-	public void confirmationyes(SaveFile<e> saveFile2) {
+	public void confirmationyes(SaveFile<E> saveFile2) {
 
 		String location = saveFile2.getSaveLocation();
 
@@ -98,19 +98,19 @@ public class ConfirmationDialog<e, f> {
 		this.parent = parent;
 	}
 
-	public ArrayList<e> getSaveFile() {
+	public ArrayList<E> getSaveFile() {
 		return saveFile;
 	}
 
-	public void setSaveFile(ArrayList<e> saveFile) {
+	public void setSaveFile(ArrayList<E> saveFile) {
 		this.saveFile = saveFile;
 	}
 
-	public e getNewE() {
+	public E getNewE() {
 		return newE;
 	}
 
-	public void setNewE(e newE) {
+	public void setNewE(E newE) {
 		this.newE = newE;
 	}
 
