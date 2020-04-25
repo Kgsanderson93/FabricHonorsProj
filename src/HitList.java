@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 //takes parameters from new Pattern and creates a copy of current fabric inventory searches and pops invalid entries according to patterns parameters. 
-public class HitList<f> {
+public class HitList {
 	public static final String FABRIC_SAVE = "fabric_inventory.sav";
 	private Pattern newPattern;
 	private ArrayList<Fabric> fabricList;
@@ -10,12 +10,9 @@ public class HitList<f> {
 	// search against!
 	private String patternType;
 	// do not search against
-	private String patternWhoFor;
 	// not search against?
-	private boolean splitYardage;
 	// not explicitly searched against (yardage converted to main fabric if split is
 	// false)
-	private double yardage = 0;
 	// search against min and max at same time!
 	private int minStretch = 0;
 	private int maxStretch = 200;
@@ -24,38 +21,38 @@ public class HitList<f> {
 	// (main contrast and yardage may all be searched against seperately)
 	// holy shit that raises so many issues....fuuccckkk.
 	private double contrastFabric = 0;
+
 	private double mainFabric = 0;
 	private double bandFabric = 0;
 
 	// may not need these?
-	private String Fabricname;
 	private double fabricYardage = 0;
 	private int fabricStretch = 0;
 	private String fabricUses;
 	private String fabricBase;
+	
+	//hit list instance lists
+	ArrayList <Fabric> newListContrast;
 
-	private final String[] patternTypes = { "Shirt", "Dress", "Pants", "Swim", "Lingerie", "Pjs", "Bags", "Toys",
-	"Romper" };
-	private final String[] fabricBaseLabels = { "Double Brushed Poly", "Cotton Lycra", "French Terry", "Rayon",
-	"Denim" };
-	private final String[] patternWho = { "Men", "Women", "Children", "Baby", "Other" };
 
-	@SuppressWarnings("unchecked")
-	public HitList(Pattern newPattern2, SaveFile<f> saveFile2) {
+	ArrayList <Fabric> newListBand;
+	ArrayList <Fabric> newListMain;
+
+
+	
+	public HitList(Pattern newPattern2, SaveFile<Fabric> saveFile2) {
 		// set up and pull new patterns reqs
 		this.newPattern = newPattern2;
-		fabricList = (ArrayList<Fabric>) saveFile2.getInventory();
-		patternName = newPattern.getName();
+		fabricList =  saveFile2.getInventory();
+		setPatternName(newPattern.getName());
 		patternType = newPattern.getType();
-		patternWhoFor = newPattern.getWhoFor();
-		splitYardage = newPattern.isSplityardage();
-		yardage = newPattern.getYardage();
 		minStretch = newPattern.getMinStretch();
 		maxStretch = newPattern.getMaxStretch();
 		patternBase = newPattern.getBase();
 		contrastFabric = newPattern.getContrastFabric();
 		mainFabric = newPattern.getMainFabric();
 		bandFabric = newPattern.getBandFabric();
+		
 
 		// copy fabric array so pops arent hitting main databank
 		ArrayList<Fabric> newListMain = copyArray(fabricList);
@@ -67,7 +64,7 @@ public class HitList<f> {
 
 		// copy remaining list for any yardage reqs above 0
 		if (contrastFabric > 0) {
-			ArrayList<Fabric> newListContrast = copyArray(newListMain);
+			newListContrast = copyArray(newListMain);
 			popYardage(newListContrast, contrastFabric);
 		}
 		if (bandFabric > 0) {
@@ -76,6 +73,8 @@ public class HitList<f> {
 		}
 		popYardage(newListMain, mainFabric);
 
+		@SuppressWarnings("unused")
+		DisplayHitList display= new DisplayHitList(this, saveFile2);
 	}
 
 	private void popYardage(ArrayList<Fabric> newList, double yardage) {
@@ -128,6 +127,48 @@ public class HitList<f> {
 			newList.add(i, fabricList.get(i));
 		}
 		return newList;
+	}
+
+	public String getPatternName() {
+		return patternName;
+	}
+
+	public void setPatternName(String patternName) {
+		this.patternName = patternName;
+	}
+	public ArrayList<Fabric> getNewListContrast() {
+		return newListContrast;
+	}
+
+	public ArrayList<Fabric> getNewListBand() {
+		return newListBand;
+	}
+
+	public ArrayList<Fabric> getNewListMain() {
+		return newListMain;
+	}
+	public double getContrastFabric() {
+		return contrastFabric;
+	}
+
+	public void setContrastFabric(double contrastFabric) {
+		this.contrastFabric = contrastFabric;
+	}
+
+	public double getMainFabric() {
+		return mainFabric;
+	}
+
+	public void setMainFabric(double mainFabric) {
+		this.mainFabric = mainFabric;
+	}
+
+	public double getBandFabric() {
+		return bandFabric;
+	}
+
+	public void setBandFabric(double bandFabric) {
+		this.bandFabric = bandFabric;
 	}
 
 }

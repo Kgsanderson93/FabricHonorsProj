@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class Pattern implements Serializable {
 
+	public static final String[] WHO_FOR = { "Men", "Women", "Children", "Baby", "Other" };
+
+	public static final String[] PATTERN_TYPES = { "Shirt", "Dress", "Pants", "Swim", "Lingerie", "Pjs", "Bags", "Toys", "Romper" };
+
 	/**
 	 * 
 	 */
@@ -12,7 +16,6 @@ public class Pattern implements Serializable {
 	private String name;
 	private String patternType;
 	private String whoFor;
-	private boolean splityardage;
 	private double yardage = 0;
 	private int minStretch = 0;
 	private int maxStretch = 200;
@@ -20,9 +23,7 @@ public class Pattern implements Serializable {
 	private double contrastFabric = 0;
 	private double mainFabric = 0;
 	private double bandFabric = 0;
-	private final String[] patternTypes = { "Shirt", "Dress", "Pants", "Swim", "Lingerie", "Pjs", "Bags", "Toys", "Romper" };
-	private final String[] fabricBaseLabels = { "Double Brushed Poly", "Cotton Lycra", "French Terry", "Rayon", "Denim" };
-	private final String[] patternWho = { "Men", "Women", "Children", "Baby", "Other" };
+
 	
 
 	public Pattern() {
@@ -75,14 +76,6 @@ public class Pattern implements Serializable {
 
 	public void setType(String type) {
 		this.patternType = type;
-	}
-
-	public boolean isSplityardage() {
-		return splityardage;
-	}
-
-	public void setSplityardage(boolean splityardage) {
-		this.splityardage = splityardage;
 	}
 
 	public double getYardage() {
@@ -148,18 +141,6 @@ public class Pattern implements Serializable {
 	public void setWhoFor(String whoFor) {
 		this.whoFor = whoFor;
 	}
-	public String[] getPatternTypes() {
-		return patternTypes;
-	}
-
-	public String[] getFabricBaseLabels() {
-		return fabricBaseLabels;
-	}
-
-	public String[] getPatternWho() {
-		return patternWho;
-	}
-
 
 
 	@Override

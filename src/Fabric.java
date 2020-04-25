@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class Fabric implements Serializable {
 	
+	public static final String[] FABRIC_BASES = { "Double Brushed Poly", "Cotton Lycra", "French Terry", "Rayon", "Denim" };
+
 	public final static String[] ALL_USES = { "Shirt", "Pants", "Underwear", "Outerwear", "Dresses" };
 
 	/**

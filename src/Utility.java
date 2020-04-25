@@ -1,5 +1,6 @@
 import java.awt.Component;
 import java.awt.Container;
+import java.util.ArrayList;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -51,5 +52,21 @@ public class Utility {
 		}
 		return isValid;
 		
+	}
+	public static String getSelectedBoxes(JCheckBox[] boxes) {
+		String selected = "";
+		for (JCheckBox box : boxes)
+			if (box.isSelected())
+				selected = selected + " " + (box.getText());
+		return selected;
+	}
+	public static Fabric searchName(String name, ArrayList<Fabric> fabricList) {
+		// Wes said something about Streams
+		for (Fabric ele: fabricList) {
+			if (ele.getName().equalsIgnoreCase(name)) {
+				return ele;
+			}
+		}
+		return null;
 	}
 }

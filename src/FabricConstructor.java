@@ -37,12 +37,11 @@ public class FabricConstructor extends JFrame {
 
 	private JButton addButton = new JButton("Add");
 
-	private String[] fabricBaseLabels = { "Double Brushed Poly", "Cotton Lycra", "FrenchTerry", "Rayon", "Denim" };
 	private JLabel jlBaseSelector = new JLabel("Select base");
-	private JComboBox<String> cbfabricBase = new JComboBox<String>(fabricBaseLabels);
+	private JComboBox<String> cbfabricBase = new JComboBox<String>(Fabric.FABRIC_BASES);
 
 	private JLabel jlSuitableForPrompt = new JLabel("Select what the fabric is suitable for");
-	private JCheckBox[] boxes = new JCheckBox[Fabric.ALL_USES.length]; // Each checkbox will get a name of garment from
+	private JCheckBox[] boxes = new JCheckBox[Pattern.PATTERN_TYPES.length]; // Each checkbox will get a name of garment from
 																		// suitablefor array.
 	
 	public FabricConstructor(FirstWindow parent, SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
@@ -82,7 +81,7 @@ public class FabricConstructor extends JFrame {
 		addAFabric.add(jlSuitableForPrompt, constraints);
 		constraints.gridx++;
 		for (int i = 0; i < boxes.length; i++) {
-			boxes[i] = new JCheckBox(Fabric.ALL_USES[i]);
+			boxes[i] = new JCheckBox(Pattern.PATTERN_TYPES[i]);
 
 			addAFabric.add(boxes[i], constraints);
 			constraints.gridy++;

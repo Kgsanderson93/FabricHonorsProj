@@ -20,13 +20,13 @@ import javax.swing.JLabel;
 
 import javax.swing.JPanel;
 
-public class ConfirmationDialog<E, f> {
+public class ConfirmationDialog<E, F> {
 	private JFrame parent;
 	private ArrayList<E> saveFile;
 	private E newE;
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public ConfirmationDialog(JFrame parent, SaveFile<E> saveFile,SaveFile<f> saveFile2 ,JPanel displayInfo2Confirm,E newE, String title) {
+	@SuppressWarnings({ "unchecked"})
+	public ConfirmationDialog(JFrame parent, SaveFile<E> saveFile,SaveFile<F> saveFile2 ,JPanel displayInfo2Confirm,E newE, String title) {
 		this.setNewE(newE);
 		this.setParent(parent);
 		this.setSaveFile(saveFile.getInventory());
@@ -73,7 +73,8 @@ public class ConfirmationDialog<E, f> {
 		if(newE instanceof Pattern) {
 			Pattern newPattern=(Pattern)newE;
 			@SuppressWarnings("unused")
-			HitList newPatternHits= new HitList(newPattern, saveFile2);
+			HitList newPatternHits= new HitList(newPattern, (SaveFile<Fabric>) saveFile2);
+			
 		}
 		
 	}

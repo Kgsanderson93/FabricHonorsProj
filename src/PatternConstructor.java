@@ -37,18 +37,16 @@ public class PatternConstructor extends JFrame {
 	private String patternTypesSelected;
 	private JLabel jLPatternTypesPrompt = new JLabel(
 			"Select the types of items that can be created from this pattern:");
-	private String[] patternTypes = { "Shirt", "Dress", "Pants", "Swim", "Lingerie", "Pjs", "Bags", "Toys", "Romper" };
-	private JCheckBox[] jCBPatternTypes = new JCheckBox[patternTypes.length];
+	private JCheckBox[] jCBPatternTypes = new JCheckBox[Pattern.PATTERN_TYPES.length];
 
 	private String base;
-	private String[] fabricBaseLabels = { "Double Brushed Poly", "Cotton Lycra", "French Terry", "Rayon", "Denim" };
+
 	private JLabel jlBaseSelector = new JLabel("Select bases most appropriate");
-	private JCheckBox[] jCBfabricBase = new JCheckBox[fabricBaseLabels.length];
+	private JCheckBox[] jCBfabricBase = new JCheckBox[Fabric.FABRIC_BASES.length];
 
 	private String whofor;
 	private JLabel jLWhoFor = new JLabel("This pattern is suitable for:");
-	private String[] patternWho = { "Men", "Women", "Children", "Baby", "Other" };
-	private JCheckBox[] jCBwhofor = new JCheckBox[patternWho.length];
+	private JCheckBox[] jCBwhofor = new JCheckBox[Pattern.WHO_FOR.length];
 
 	private int minStretch = 0;
 	private int maxStretch = 200;
@@ -138,7 +136,7 @@ public class PatternConstructor extends JFrame {
 		addAPatternMain.add(jLPatternTypesPrompt, constraints);
 		constraints.gridx = 1;
 		for (int i = 0; i < jCBPatternTypes.length; i++) {
-			jCBPatternTypes[i] = new JCheckBox(patternTypes[i]);
+			jCBPatternTypes[i] = new JCheckBox(Pattern.PATTERN_TYPES[i]);
 			addAPatternMain.add(jCBPatternTypes[i], constraints);
 			constraints.gridx++;
 		}
@@ -148,7 +146,7 @@ public class PatternConstructor extends JFrame {
 		addAPatternMain.add(jLWhoFor, constraints);
 		constraints.gridx = 1;
 		for (int i = 0; i < jCBwhofor.length; i++) {
-			jCBwhofor[i] = new JCheckBox(patternWho[i]);
+			jCBwhofor[i] = new JCheckBox(Pattern.WHO_FOR[i]);
 			addAPatternMain.add(jCBwhofor[i], constraints);
 			constraints.gridx++;
 		}
@@ -158,7 +156,7 @@ public class PatternConstructor extends JFrame {
 		addAPatternMain.add(jlBaseSelector, constraints);
 		constraints.gridx++;
 		for (int i = 0; i < jCBfabricBase.length; i++) {
-			jCBfabricBase[i] = new JCheckBox(fabricBaseLabels[i]);
+			jCBfabricBase[i] = new JCheckBox(Fabric.FABRIC_BASES[i]);
 			addAPatternMain.add(jCBfabricBase[i], constraints);
 			constraints.gridx++;
 		}
@@ -266,7 +264,7 @@ public class PatternConstructor extends JFrame {
 
 	public void setPatternTypesSelected(String patternTypesSelected) {
 		if (patternTypesSelected.equals(null))
-			patternTypesSelected = Utility.arrayToString(patternTypes);
+			patternTypesSelected = Utility.arrayToString(Pattern.PATTERN_TYPES);
 		this.patternTypesSelected = patternTypesSelected;
 	}
 
@@ -276,7 +274,7 @@ public class PatternConstructor extends JFrame {
 
 	public void setBase(String base) {
 		if (base.equals(null))
-			base = Utility.arrayToString(fabricBaseLabels);
+			base = Utility.arrayToString(Fabric.FABRIC_BASES);
 		this.base = base;
 	}
 
@@ -286,7 +284,7 @@ public class PatternConstructor extends JFrame {
 
 	public void setWhofor(String whofor) {
 		if (whofor.equals(null))
-			whofor = Utility.arrayToString(patternWho);
+			whofor = Utility.arrayToString(Pattern.WHO_FOR);
 		this.whofor = whofor;
 	}
 
@@ -342,13 +340,7 @@ public class PatternConstructor extends JFrame {
 		this.bandFabric = bandFabric;
 	}
 
-	public String getSelectedBoxes(JCheckBox[] boxes) {
-		String selected = "";
-		for (JCheckBox box : boxes)
-			if (box.isSelected())
-				selected = selected + " " + (box.getText());
-		return selected;
-	}
+
 
 	public Pattern getNewPattern() {
 		return newPattern;
@@ -366,9 +358,9 @@ public class PatternConstructor extends JFrame {
 			populated = false;
 		} else {
 			setName(jTNameInput.getText());
-			setBase(getSelectedBoxes(jCBfabricBase));
-			setWhofor(getSelectedBoxes(jCBwhofor));
-			setPatternTypesSelected(getSelectedBoxes(jCBPatternTypes));
+			setBase(Utility.getSelectedBoxes(jCBfabricBase));
+			setWhofor(Utility.getSelectedBoxes(jCBwhofor));
+			setPatternTypesSelected(Utility.getSelectedBoxes(jCBPatternTypes));
 			setSplityardage(isSplityardage());
 			try {
 				setMinStretch(Integer.parseInt(jTMinStretch.getText()));
