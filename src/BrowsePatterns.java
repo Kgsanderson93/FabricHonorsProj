@@ -21,29 +21,30 @@ public class BrowsePatterns extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -4545816644881277994L;
-	
+
 	private static final int DEFAULT_X_SIZE = 800;
 	private static final int DEFAULT_Y_SIZE = 800;
 
-	JRadioButton[] patternButton;
-	SaveFile<Fabric> fabricSave;
-	SaveFile<Pattern> patternSave;
-	ArrayList<Pattern> patternList;
-	ButtonGroup JPatternButtons;
-	ActionListener[] buttonListeners;
+	private JRadioButton[] patternButton;
+	private SaveFile<Fabric> fabricSave;
+	private SaveFile<Pattern> patternSave;
+	private ArrayList<Pattern> patternList;
+	private ButtonGroup jPatternButtons;
+	private ActionListener[] buttonListeners;
 
-	JTextArea patternInfo;
-	JPanel patternInfoPanel;
-	JPanel patternButtonDisplay;
-	JPanel display;
-	JPanel buttonPanel;
-	Pattern selected;
+	private JTextArea patternInfo;
+	private JPanel patternInfoPanel;
+	private JPanel patternButtonDisplay;
+	private JPanel display;
+	private JPanel buttonPanel;
+	private Pattern selected;
 
 	public BrowsePatterns(SaveFile<Fabric> fabricSave2, SaveFile<Pattern> patternSave2) {
 		// create layouts
 		BorderLayout layout = new BorderLayout();
-
+		BorderLayout layout2 = new BorderLayout();
 		GridBagLayout gridLayout = new GridBagLayout();
+		GridBagLayout gridLayout2 = new GridBagLayout();
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		constraints.anchor = GridBagConstraints.NORTHWEST;
@@ -54,16 +55,15 @@ public class BrowsePatterns extends JFrame {
 
 		// create panels
 		display = new JPanel(layout);
-		patternInfoPanel = new JPanel(layout);
+		patternInfoPanel = new JPanel(layout2);
 		patternButtonDisplay = new JPanel(gridLayout);
-		buttonPanel = new JPanel(gridLayout);
+		buttonPanel = new JPanel(gridLayout2);
 
 		// set up frame display
 		this.setContentPane(display);
 		this.setSize(DEFAULT_X_SIZE, DEFAULT_Y_SIZE);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setVisible(true);
-		
 
 		// set info panel to start with a blank JTextArea that is hidden
 		patternInfoPanel.setVisible(false);
@@ -76,20 +76,20 @@ public class BrowsePatterns extends JFrame {
 		patternList = patternSave.getInventory();
 		patternButton = new JRadioButton[patternList.size()];
 		buttonListeners = new ActionListener[patternList.size()];
-		JPatternButtons = new ButtonGroup();
+		jPatternButtons = new ButtonGroup();
 
 		// create JRadio buttons their listeners and add buttons to group and add
 		// listeners to each button, lastly add each button to the button panel and up
 		// gridx.
 		if (patternList.isEmpty() == true) {
 			JLabel isEmpty = new JLabel("You have no Patterns entered currently");
-			patternButtonDisplay.add(isEmpty, BorderLayout.CENTER);
+			patternButtonDisplay.add(isEmpty, constraints);
 		} else {
 			for (int i = 0; i < patternList.size(); i++) {
 				Pattern temp = patternList.get(i);
 				String holdName = temp.getName();
 				patternButton[i] = new JRadioButton(holdName);
-				JPatternButtons.add(patternButton[i]);
+				jPatternButtons.add(patternButton[i]);
 				buttonListeners[i] = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -103,7 +103,7 @@ public class BrowsePatterns extends JFrame {
 				};
 				patternButton[i].addActionListener(buttonListeners[i]);
 				patternButtonDisplay.add(patternButton[i], constraints);
-				constraints.gridx++;
+				constraints.gridy++;
 			}
 			// create buttons delete, hitList, add
 			JButton delete = new JButton("delete this Pattern");
@@ -130,25 +130,25 @@ public class BrowsePatterns extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					@SuppressWarnings("unused")
-					PatternConstructor constructPattern= new PatternConstructor(fabricSave, patternSave);
+					PatternConstructor constructPattern = new PatternConstructor(fabricSave, patternSave);
 				}
 
 			};
 			delete.addActionListener(deleteListener);
 			hitList.addActionListener(hitListListener);
 			add.addActionListener(addListener);
-			buttonPanel.add(delete,constraints);
+			buttonPanel.add(delete, constraints);
 			constraints.gridx++;
-			buttonPanel.add(hitList,constraints);
+			buttonPanel.add(hitList, constraints);
 			constraints.gridx++;
-			buttonPanel.add(add,constraints);
+			buttonPanel.add(add, constraints);
 			display.add(patternInfoPanel, BorderLayout.LINE_END);
 			display.add(patternButtonDisplay, BorderLayout.LINE_START);
 			display.add(buttonPanel, BorderLayout.PAGE_END);
 		}
 	}
 
-	protected void confirmDelete() {
+	public void confirmDelete() {
 		int response = JOptionPane.showConfirmDialog(null, selected.toString(),
 				"Are you sure you want to delete this Pattern?", JOptionPane.YES_NO_OPTION);
 		if (response == JOptionPane.YES_OPTION) {
@@ -158,7 +158,7 @@ public class BrowsePatterns extends JFrame {
 		}
 	}
 
-	private void popConfirmed() {
+	public void popConfirmed() {
 		patternList.remove(selected);
 		try {
 			patternSave.saveInventory(StartApp.PATTERN_SAVE);
