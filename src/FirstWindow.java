@@ -49,7 +49,8 @@ public class FirstWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				for (Pattern pattern : patternList)
 					System.out.println(pattern.toString());
-
+				@SuppressWarnings("unused")
+				BrowsePatterns browse= new BrowsePatterns(fabricSave, patternSave);
 			}
 		};
 		// }

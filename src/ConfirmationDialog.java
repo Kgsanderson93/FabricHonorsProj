@@ -7,7 +7,9 @@
 // dump should reset the window the original button came from 
 
 
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class ConfirmationDialog<E, F> {
 	private JFrame parent;
@@ -32,19 +35,31 @@ public class ConfirmationDialog<E, F> {
 		this.setSaveFile(saveFile.getInventory());
 		JFrame popup = new JFrame("is this correct?");
 		popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		popup.setSize(560, 200);
+		popup.setSize(400, 250);
 		popup.setLocationRelativeTo(null);
 		popup.setVisible(true);
-		LayoutManager layout = new FlowLayout();
+		LayoutManager layout = new BorderLayout();
+		
+		JPanel button= new JPanel(new GridBagLayout());
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.anchor = GridBagConstraints.NORTHWEST;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.weightx = 1;
+		constraints.weighty = 0;
 
-		JLabel confirmPrompt = new JLabel("Is this correct? Press Yes to save and No to return to"+ title);
+		JLabel confirmPrompt = new JLabel("Is this correct? Press Yes to save and No to return to "+ title);
 //change to +class?
 		
 		JButton yesButton = new JButton("yes");
 		JButton noButton = new JButton("no");
 		popup.setLayout(layout);
-		popup.add(confirmPrompt);
-		popup.add(displayInfo2Confirm);
+		popup.add(confirmPrompt, BorderLayout.PAGE_START);
+		JScrollPane scrollPane = new JScrollPane(displayInfo2Confirm);
+		scrollPane.getViewport().setOpaque(false);
+		scrollPane.setOpaque(false);
+		popup.add(scrollPane,BorderLayout.CENTER);
 		
 		
 
@@ -67,17 +82,23 @@ public class ConfirmationDialog<E, F> {
 		};
 		yesButton.addActionListener(addButtonListeneryes);
 		noButton.addActionListener(addButtonListenerno);
-		popup.add(yesButton);
-		popup.add(noButton);
+		
+		popup.add(button, BorderLayout.PAGE_END);
+		button.add(yesButton,constraints);
+		constraints.gridx++;
+		button.add(noButton,constraints);
 		
 		
 		
 	}
+@SuppressWarnings("unchecked")
 public void FabricHitList(SaveFile<F> saveFile2) {
 	if(newE instanceof Pattern) {
 		Pattern newPattern=(Pattern)newE;
-		@SuppressWarnings("unused")
+	
+
 		HitList newPatternHits= new HitList(newPattern, (SaveFile<Fabric>) saveFile2);
+		@SuppressWarnings("unused")
 		DisplayHitList display= new DisplayHitList(newPatternHits, (SaveFile<Fabric>) saveFile2);
 		
 	}

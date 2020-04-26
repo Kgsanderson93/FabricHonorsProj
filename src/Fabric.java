@@ -75,9 +75,9 @@ public class Fabric implements Serializable {
 	
 
 	@Override
-	public String toString() { return "Fabric {\n\tname=" + name + "\n\tbase=" + base +
+	public String toString() { return "Fabric \n\tname=" + name + "\n\tbase=" + base +
 			"\n\tyardage=" + yardage + "\n\tstretch=" + stretch + "\n\tuses=" + uses + 
-			"\n}"; }
+			"\n"; }
 	 
 
 	public int getStretch() {

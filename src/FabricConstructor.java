@@ -1,6 +1,7 @@
 //Takes User input to construct a new fabric 
 // need to implement check that all required input is valid 
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -14,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class FabricConstructor extends JFrame {
@@ -142,20 +144,15 @@ public class FabricConstructor extends JFrame {
 		Fabric newFabric = new Fabric(fabricName, yardage, baseSelection, stretch, selected);
 
 		JPanel displayInfo2Confirm = new JPanel();
+		JTextArea info= new JTextArea(newFabric.toString());
+		info.setOpaque(false);
+		
+		info.setBackground(new Color(0, 0, 0, 0));
+			displayInfo2Confirm.add(info);	
 
-		JLabel jlBaseSelected = new JLabel("You have selected " + baseSelection + " as the fabric base");
-		JLabel jlnamed = new JLabel("You have named the fabric: " + fabricName);
-		JLabel jlYardage = new JLabel("You have reported: " + yardage + " yards");
-		JLabel jlStretch = new JLabel(
-				"You have reported that this fabric has " + String.valueOf(stretch) + " stretch percentage");
-		JLabel boxesSelected = new JLabel("You report that this fabric is suitable for these uses" + selected);
 
 		// Add the components to the window
-		displayInfo2Confirm.add(jlnamed);
-		displayInfo2Confirm.add(jlBaseSelected);
-		displayInfo2Confirm.add(boxesSelected);
-		displayInfo2Confirm.add(jlStretch);
-		displayInfo2Confirm.add(jlYardage);
+
 		@SuppressWarnings("unused")
 		ConfirmationDialog<Fabric, Pattern> confirmationDialog = new ConfirmationDialog<Fabric,Pattern>(this, fabricSave,patternSave, displayInfo2Confirm,
 				newFabric, "Add A Fabric");

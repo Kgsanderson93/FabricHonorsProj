@@ -6,6 +6,7 @@
 //checks that minimum information is input 
 //
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -18,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class PatternConstructor extends JFrame {
@@ -382,35 +384,13 @@ public class PatternConstructor extends JFrame {
 	public JPanel confirmationPanel() {
 		// create Panel and JLabels
 		JPanel info2display = new JPanel();
-		JLabel jLNameEntered = new JLabel("You have named the pattern: " + getName());
-		JLabel jLBaseSelected = new JLabel("You reported this pattern works with these bases:" + getBase());
-		JLabel jLWhoForSelected = new JLabel("You have indicated this pattern works for: " + getWhofor());
-		JLabel jLPatternTypesSelected = new JLabel(
-				"You have indicated this pattern creates these types of items: " + getPatternTypesSelected());
-		JLabel jLMaxStretchEntered = new JLabel(
-				"You reported a range of stretch from: " + String.valueOf(getMaxStretch()));
-		JLabel jLMinStretchEntered = new JLabel(" to: " + String.valueOf(getMinStretch()));
-		JLabel jLYardageEntered = new JLabel("The pattern requires:" + String.valueOf(getYardage()) + " yards");
-		boolean split = getSplitYardage();
-		JLabel jLMainFabricEntered = new JLabel("The patterns main fabric requirement is: "
-				+ String.valueOf(getMainFabric()) + "\n *note if yardage is not split all fabric is main fabric");
-		JLabel jLContrastFabricEntered = new JLabel("" + String.valueOf(getContrastFabric()));
-		JLabel jLBandFabricEntered = new JLabel(String.valueOf(getBandFabric()));
-		// add Labels to Panel
-		info2display.add(jLNameEntered);
-		info2display.add(jLPatternTypesSelected);
-		info2display.add(jLWhoForSelected);
-		info2display.add(jLBaseSelected);
-		info2display.add(jLYardageEntered);
-		info2display.add(jLMinStretchEntered);
-		info2display.add(jLMaxStretchEntered);
-		info2display.add(jLMainFabricEntered);
-		// check split to add additional Labels
-		if (split == true) {
-			info2display.add(jLContrastFabricEntered);
-			info2display.add(jLBandFabricEntered);
+		JTextArea info= new JTextArea(newPattern.toString());
+		info.setOpaque(false);
+		
+		info.setBackground(new Color(0, 0, 0, 0));
+		info2display.add(info);
 
-		}
+		
 		return info2display;
 
 	}
