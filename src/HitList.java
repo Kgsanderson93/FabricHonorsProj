@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 //takes parameters from new Pattern and creates a copy of current fabric inventory searches and pops invalid entries according to patterns parameters. 
 public class HitList {
@@ -74,56 +75,58 @@ public class HitList {
 		
 		
 	}
+	
+
+	
 
 	private void popYardage(ArrayList<Fabric> newList, double yardage) {
 		Fabric temp;
-		for (int i = 0; i < newList.size(); i++) {
-			temp = newList.get(i);
+		for (Iterator<Fabric> iterator = newList.iterator(); iterator.hasNext();) {
+		    temp = iterator.next();
 			fabricYardage = temp.getYardage();
 			if (fabricYardage < yardage) {
-				newList.remove(i);
+				iterator.remove();;
 			}
 		}
 	}
 
 	private void popBase(ArrayList<Fabric> newList) {
 		Fabric temp;
-		for (int i = 0; i < newList.size(); i++) {
-			temp = newList.get(i);
+		for (Iterator<Fabric> iterator = newList.iterator(); iterator.hasNext();) {
+		    temp = iterator.next();
 			fabricBase = temp.getBase();
 			if (!patternBase.contains(fabricBase)) {
-				newList.remove(i);
+				iterator.remove();
 			}
 		}
 	}
 
 	private void popStretch(ArrayList<Fabric> newList) {
 		Fabric temp;
-		for (int i = 0; i < newList.size(); i++) {
-			temp = newList.get(i);
+		for (Iterator<Fabric> iterator = newList.iterator(); iterator.hasNext();) {
+		    temp = iterator.next();
 			fabricStretch = temp.getStretch();
 			if (fabricStretch > maxStretch || fabricStretch < minStretch) {
-				newList.remove(i);
+				iterator.remove();
 			}
 		}
 	}
 
 	private void popType(ArrayList<Fabric> newList) {
-		Fabric temp;
-		for (int i = 0; i < newList.size(); i++) {
-			temp = newList.get(i);
+			Fabric temp;
+		for (Iterator<Fabric> iterator = newList.iterator(); iterator.hasNext();) {
+		    temp = iterator.next();
 			fabricUses = temp.getUses();
-			if (!patternType.contains(fabricUses)) {
-				newList.remove(i);
+			if (! fabricUses.contains(patternType)) {
+				iterator.remove();
 			}
 		}
 	}
 
 	public ArrayList<Fabric> copyArray(ArrayList<Fabric> fabricList) {
 		ArrayList<Fabric> newList = new ArrayList<>();
-		for (int i = 0; i < fabricList.size(); i++) {
-			newList.add(i, fabricList.get(i));
-		}
+		newList.addAll(fabricList);
+		
 		return newList;
 	}
 

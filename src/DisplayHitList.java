@@ -2,6 +2,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -41,6 +42,7 @@ public class DisplayHitList extends JFrame {
 	String band="";
 	String main ="";
 	HitList hitList;
+	SaveFile<Fabric> fabricSave;
 	
 	public static final int DEFAULT_X_SIZE = 800;
 	public static final int DEFAULT_Y_SIZE = 400;
@@ -67,6 +69,7 @@ public class DisplayHitList extends JFrame {
 		contrastFabric = hits.getNewListContrast();
 		bandFabric = hits.getNewListBand();
 		fabricInventory=fabricInventorySave.getInventory();
+		fabricSave=fabricInventorySave;
 		hitList=hits;
 		
 		mainFabricLabel = new JLabel("These fabrics match the pattern, " + patternName
@@ -187,7 +190,12 @@ public class DisplayHitList extends JFrame {
 			fabricInventory.remove(bandFabricSelected);
 			}
 		}
-				
+			try {
+				fabricSave.saveInventory(StartApp.FABRIC_SAVE);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 	private void getSelected() {
