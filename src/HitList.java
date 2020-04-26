@@ -71,8 +71,8 @@ public class HitList {
 		}
 		popYardage(newListMain, mainFabric);
 
-		@SuppressWarnings("unused")
-		DisplayHitList display= new DisplayHitList(this, saveFile2);
+		
+		
 	}
 
 	private void popYardage(ArrayList<Fabric> newList, double yardage) {

@@ -41,11 +41,18 @@ public class DisplayHitList extends JFrame {
 	String band="";
 	String main ="";
 	HitList hitList;
+	
+	public static final int DEFAULT_X_SIZE = 800;
+	public static final int DEFAULT_Y_SIZE = 400;
+	
+	
 	public DisplayHitList(HitList hits, SaveFile<Fabric> fabricInventorySave) {
-		super();
 		GridBagLayout layout = new GridBagLayout();
 		JPanel display = new JPanel(layout);
 		this.setContentPane(display);
+		this.setSize(DEFAULT_X_SIZE, DEFAULT_Y_SIZE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setVisible(true);
 
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -69,7 +76,7 @@ public class DisplayHitList extends JFrame {
 		mainFabricBoxes = new JCheckBox[mainFabric.size()];
 		for (int i = 0; i < mainFabricBoxes.length; i++) {
 			Fabric temp = mainFabric.get(i);
-			String holder = temp.toString();
+			String holder = temp.getName();
 			mainFabricBoxes[i] = new JCheckBox(holder);
 
 			display.add(mainFabricBoxes[i], constraints);
@@ -85,7 +92,7 @@ public class DisplayHitList extends JFrame {
 			contrastFabricBoxes = new JCheckBox[contrastFabric.size()];
 			for (int i = 0; i < contrastFabricBoxes.length; i++) {
 				Fabric temp = contrastFabric.get(i);
-				String holder = temp.toString();
+				String holder = temp.getName();
 				contrastFabricBoxes[i] = new JCheckBox(holder);
 
 				display.add(contrastFabricBoxes[i], constraints);
@@ -149,7 +156,7 @@ public class DisplayHitList extends JFrame {
 		Fabric contrastFabricSelected;
 		Fabric bandFabricSelected;
 		
-		Fabric mainFabricSelected=Utility.searchName(main, fabricInventory);
+		Fabric mainFabricSelected=Utility.searchName(main.strip(), fabricInventory);
 		
 		double hold=mainFabricSelected.getYardage()-hitList.getMainFabric();
 		if (hold>0) {
@@ -161,7 +168,7 @@ public class DisplayHitList extends JFrame {
 		
 		
 		if (contrastFabric.isEmpty() == false) {
-			contrastFabricSelected=Utility.searchName(contrast, fabricInventory);
+			contrastFabricSelected=Utility.searchName(contrast.strip(), fabricInventory);
 			hold=contrastFabricSelected.getYardage()-hitList.getContrastFabric();
 			if (hold>0) {
 				contrastFabricSelected.setYardage(hold);
@@ -171,7 +178,7 @@ public class DisplayHitList extends JFrame {
 			}
 		}
 		if (bandFabric.isEmpty() == false) {
-			bandFabricSelected=Utility.searchName(band, fabricInventory);
+			bandFabricSelected=Utility.searchName(band.strip(), fabricInventory);
 			hold=bandFabricSelected.getYardage()-hitList.getBandFabric();
 			if (hold>0) {
 				bandFabricSelected.setYardage(hold);

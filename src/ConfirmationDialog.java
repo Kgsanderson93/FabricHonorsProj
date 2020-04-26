@@ -25,7 +25,7 @@ public class ConfirmationDialog<E, F> {
 	private ArrayList<E> saveFile;
 	private E newE;
 
-	@SuppressWarnings({ "unchecked"})
+	
 	public ConfirmationDialog(JFrame parent, SaveFile<E> saveFile,SaveFile<F> saveFile2 ,JPanel displayInfo2Confirm,E newE, String title) {
 		this.setNewE(newE);
 		this.setParent(parent);
@@ -54,7 +54,7 @@ public class ConfirmationDialog<E, F> {
 				saveFile.add(newE);
 				confirmationyes(saveFile);
 				Utility.clearFields(parent);
-				
+				FabricHitList(saveFile2);
 				popup.dispose();
 			}
 		};
@@ -70,15 +70,19 @@ public class ConfirmationDialog<E, F> {
 		popup.add(yesButton);
 		popup.add(noButton);
 		
-		if(newE instanceof Pattern) {
-			Pattern newPattern=(Pattern)newE;
-			@SuppressWarnings("unused")
-			HitList newPatternHits= new HitList(newPattern, (SaveFile<Fabric>) saveFile2);
-			
-		}
+		
 		
 	}
-
+public void FabricHitList(SaveFile<F> saveFile2) {
+	if(newE instanceof Pattern) {
+		Pattern newPattern=(Pattern)newE;
+		@SuppressWarnings("unused")
+		HitList newPatternHits= new HitList(newPattern, (SaveFile<Fabric>) saveFile2);
+		DisplayHitList display= new DisplayHitList(newPatternHits, (SaveFile<Fabric>) saveFile2);
+		
+	}
+	
+}
 	public void confirmationyes(SaveFile<E> saveFile2) {
 
 		String location = saveFile2.getSaveLocation();
