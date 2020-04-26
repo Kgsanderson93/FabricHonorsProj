@@ -126,6 +126,9 @@ public class FabricConstructor extends JFrame {
 		for (JCheckBox box : boxes)
 			if (box.isSelected())
 				selected = selected + " " + (box.getText());
+		if (selected=="") {
+			selected=Utility.arrayToString(Pattern.PATTERN_TYPES);
+		}
 		return selected;
 	}
 

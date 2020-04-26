@@ -33,8 +33,6 @@ public class HitList {
 	
 	//hit list instance lists
 	ArrayList <Fabric> newListContrast;
-
-
 	ArrayList <Fabric> newListBand;
 	ArrayList <Fabric> newListMain;
 
@@ -55,7 +53,7 @@ public class HitList {
 		
 
 		// copy fabric array so pops arent hitting main databank
-		ArrayList<Fabric> newListMain = copyArray(fabricList);
+		newListMain = copyArray(fabricList);
 
 		// starta poppin
 		popStretch(newListMain);
@@ -68,7 +66,7 @@ public class HitList {
 			popYardage(newListContrast, contrastFabric);
 		}
 		if (bandFabric > 0) {
-			ArrayList<Fabric> newListBand = copyArray(newListMain);
+			 newListBand = copyArray(newListMain);
 			popYardage(newListBand, bandFabric);
 		}
 		popYardage(newListMain, mainFabric);
