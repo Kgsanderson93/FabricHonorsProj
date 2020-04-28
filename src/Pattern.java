@@ -145,10 +145,10 @@ public class Pattern implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Pattern {\n\t name=" + name + "\n\tbase=" + base + "\n\t yardage=" + yardage + "\n\t Min stretch="
+		return "Pattern \n\t name=" + name + "\n\tbase=" + base + "\n\t yardage=" + yardage + "\n\t Min stretch="
 				+ minStretch + "\n\t Max stretch=" + maxStretch + "\n\t Who it's for=" + whoFor + "\n\t Pattern Type="
 				+ patternType + "\n\t Main Fabric=" + mainFabric + "\n\t contrast Fabric=" + contrastFabric
-				+ "\n\t Band Fabric=" + bandFabric + "\n}";
+				+ "\n\t Band Fabric=" + bandFabric + "\n";
 	}
 
 }

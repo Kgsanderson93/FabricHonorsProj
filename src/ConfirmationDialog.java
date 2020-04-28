@@ -50,7 +50,7 @@ public class ConfirmationDialog<E, F> {
 		constraints.weighty = 0;
 
 		JLabel confirmPrompt = new JLabel("Is this correct? Press Yes to save and No to return to "+ title);
-//change to +class?
+
 		
 		JButton yesButton = new JButton("yes");
 		JButton noButton = new JButton("no");
@@ -71,6 +71,7 @@ public class ConfirmationDialog<E, F> {
 				Utility.clearFields(parent);
 				FabricHitList(saveFile2);
 				popup.dispose();
+				parent.dispose();
 			}
 		};
 		ActionListener addButtonListenerno = new ActionListener() {
