@@ -31,18 +31,23 @@ public class HitList {
 	private int fabricStretch = 0;
 	private String fabricUses;
 	private String fabricBase;
-	
-	//hit list instance lists
-	ArrayList <Fabric> newListContrast;
-	ArrayList <Fabric> newListBand;
-	ArrayList <Fabric> newListMain;
 
+	// hit list instance lists
+	private ArrayList<Fabric> newListContrast;
+	private ArrayList<Fabric> newListBand;
+	private ArrayList<Fabric> newListMain;
+	private ArrayList<Fabric> copyList;
+	private ArrayList<Fabric> listToEdit;
 
-	
+	// errors for if after searching a list is empty
+	private boolean emptyMain;
+	private boolean emptyContrast;
+	private boolean emptyBand;
+
 	public HitList(Pattern newPattern2, SaveFile<Fabric> saveFile2) {
 		// set up and pull new patterns reqs
 		this.newPattern = newPattern2;
-		fabricList =  saveFile2.getInventory();
+		fabricList = saveFile2.getInventory();
 		setPatternName(newPattern.getName());
 		patternType = newPattern.getType();
 		minStretch = newPattern.getMinStretch();
@@ -51,7 +56,6 @@ public class HitList {
 		contrastFabric = newPattern.getContrastFabric();
 		mainFabric = newPattern.getMainFabric();
 		bandFabric = newPattern.getBandFabric();
-		
 
 		// copy fabric array so pops arent hitting main databank
 		newListMain = copyArray(fabricList);
@@ -62,38 +66,55 @@ public class HitList {
 		popType(newListMain);
 
 		// copy remaining list for any yardage reqs above 0
+		newListContrast = new ArrayList<Fabric>();
+		newListBand = new ArrayList<Fabric>();
+		copyList=copyArray(newListMain);//pristine copy for reset used nowhere but reset
+		listToEdit=copyArray(newListMain);//remove yardage during display from here 
+		
+
 		if (contrastFabric > 0) {
-			newListContrast = copyArray(newListMain);
-			popYardage(newListContrast, contrastFabric);
+			popContrast();
 		}
 		if (bandFabric > 0) {
-			 newListBand = copyArray(newListMain);
-			popYardage(newListBand, bandFabric);
+			popBand();
+
 		}
-		popYardage(newListMain, mainFabric);
+		if (mainFabric > 0) {
+			popMain();
+		}
 
-		
-		
 	}
-	
 
-	
-
-	private void popYardage(ArrayList<Fabric> newList, double yardage) {
+	public void popYardage(ArrayList<Fabric> newList, double yardage) {
 		Fabric temp;
 		for (Iterator<Fabric> iterator = newList.iterator(); iterator.hasNext();) {
-		    temp = iterator.next();
+			temp = iterator.next();
 			fabricYardage = temp.getYardage();
 			if (fabricYardage < yardage) {
-				iterator.remove();;
+				iterator.remove();
+				;
 			}
 		}
 	}
-
+	public void popMain() {
+		newListMain=copyArray(listToEdit);//copy array so that method can be used outside of HitList with edits made to listToEdit
+		popYardage(newListMain, mainFabric);
+		emptyMain = newListMain.isEmpty();
+	}
+	public void popBand() {
+		newListBand = copyArray(listToEdit);
+		popYardage(newListBand, bandFabric);
+		emptyBand = newListBand.isEmpty();
+	}
+	public void popContrast() {
+		newListContrast = copyArray(listToEdit);
+		popYardage(newListContrast, contrastFabric);
+		emptyContrast = newListContrast.isEmpty();
+	}
 	private void popBase(ArrayList<Fabric> newList) {
 		Fabric temp;
 		for (Iterator<Fabric> iterator = newList.iterator(); iterator.hasNext();) {
-		    temp = iterator.next();
+			temp = iterator.next();
 			fabricBase = temp.getBase();
 			if (!patternBase.contains(fabricBase)) {
 				iterator.remove();
@@ -104,7 +125,7 @@ public class HitList {
 	private void popStretch(ArrayList<Fabric> newList) {
 		Fabric temp;
 		for (Iterator<Fabric> iterator = newList.iterator(); iterator.hasNext();) {
-		    temp = iterator.next();
+			temp = iterator.next();
 			fabricStretch = temp.getStretch();
 			if (fabricStretch > maxStretch || fabricStretch < minStretch) {
 				iterator.remove();
@@ -113,11 +134,11 @@ public class HitList {
 	}
 
 	private void popType(ArrayList<Fabric> newList) {
-			Fabric temp;
+		Fabric temp;
 		for (Iterator<Fabric> iterator = newList.iterator(); iterator.hasNext();) {
-		    temp = iterator.next();
+			temp = iterator.next();
 			fabricUses = temp.getUses();
-			if (! fabricUses.contains(patternType)) {
+			if (!fabricUses.contains(patternType)) {
 				iterator.remove();
 			}
 		}
@@ -126,7 +147,7 @@ public class HitList {
 	public ArrayList<Fabric> copyArray(ArrayList<Fabric> fabricList) {
 		ArrayList<Fabric> newList = new ArrayList<>();
 		newList.addAll(fabricList);
-		
+
 		return newList;
 	}
 
@@ -137,6 +158,7 @@ public class HitList {
 	public void setPatternName(String patternName) {
 		this.patternName = patternName;
 	}
+
 	public ArrayList<Fabric> getNewListContrast() {
 		return newListContrast;
 	}
@@ -148,6 +170,23 @@ public class HitList {
 	public ArrayList<Fabric> getNewListMain() {
 		return newListMain;
 	}
+
+	public ArrayList<Fabric> getCopyList() {
+		return copyList;
+	}
+
+	public void setCopyList(ArrayList<Fabric> copyList) {
+		this.copyList = copyList;
+	}
+
+	public ArrayList<Fabric> getListToEdit() {
+		return listToEdit;
+	}
+
+	public void setListToEdit(ArrayList<Fabric> listToEdit) {
+		this.listToEdit = listToEdit;
+	}
+
 	public double getContrastFabric() {
 		return contrastFabric;
 	}
@@ -171,5 +210,17 @@ public class HitList {
 	public void setBandFabric(double bandFabric) {
 		this.bandFabric = bandFabric;
 	}
-
+	public boolean getEmptyMain() {
+		return emptyMain;
+	}
+	public boolean getEmptyContrast() {
+		return emptyContrast;
+	}
+	public boolean getEmptyBand() {
+		return emptyBand;
+	}
+	public void resetListToEdit() {
+		listToEdit=copyArray(copyList);
+	}
+		
 }
