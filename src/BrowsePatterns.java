@@ -130,9 +130,13 @@ public class BrowsePatterns extends JFrame {
 				constraints.gridy++;
 			}
 		}
+
 			/**create buttons delete, hitList, add
 			*/
 			
+
+			// create buttons delete, hitList, add
+
 			JButton delete = new JButton("delete this Pattern");
 			JButton hitList = new JButton("search for fabric for this Pattern");
 			JButton add = new JButton("add a new Pattern");
