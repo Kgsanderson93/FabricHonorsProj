@@ -16,8 +16,11 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+
 /**
- * display HitList and allows user to select the fabrics the pattern should use and adjust the yardage accourdingly
+ * display HitList and allows user to select the fabrics the pattern should use
+ * and adjust the yardage accourdingly
+ * 
  * @author Kayla sanderson
  *
  */
@@ -29,11 +32,8 @@ public class DisplayHitList extends JFrame {
 	 */
 	private static final long serialVersionUID = 692755252935320356L;
 
-
-
-	
 	/**
-	 * constant x size for window/constant y size for window 
+	 * constant x size for window/constant y size for window
 	 */
 
 	private JLabel contrastFabricLabel;
@@ -68,19 +68,17 @@ public class DisplayHitList extends JFrame {
 	public static final int DEFAULT_X_SIZE = 800;
 	public static final int DEFAULT_Y_SIZE = 400;
 
-	
 	/**
 	 * constructor for display hitlist
+	 * 
 	 * @param hits
 	 * @param fabricInventorySave
 	 */
-
 
 	private int i;
 	private JTextArea mainDisplay;
 	private JTextArea contrastDisplay;
 	private JTextArea bandDisplay;
-
 
 	public DisplayHitList(HitList hits, SaveFile<Fabric> fabricInventorySave) {
 		GridBagLayout master = new GridBagLayout();
@@ -148,18 +146,29 @@ public class DisplayHitList extends JFrame {
 		constraints.gridy = 0;
 		constraints.gridx = 0;
 
-		// check if any lists were empty after pop yardage is run and display error
-		// message
+		/**
+		 * check if any lists were empty after pop yardage is run and display error
+		 * message
+		 */
+
 		if (hitList.getEmptyContrast() == true || hitList.getEmptyBand() == true || hitList.getEmptyMain() == true) {
 			notEnoughFabric();
 		} else {
 			if (mainFabric.isEmpty() == false) {
-				// JLabel creation and add
+				/**
+				 * JLabel creation and add
+				 */
 				mainFabricLabel = new JLabel("These fabrics match the pattern, " + patternName
 						+ "'s , specified requitements for the Main Fabric: ");
 				displayButtons.add(mainFabricLabel, constraints);
 				constraints.gridy++;
-				// CheckboxCreation
+				/**
+				 * CheckboxCreation and listener for that set of fabrics that assures no fabrics
+				 * are over committed by updating other sets with the new yardages after
+				 * selection. if unselected the yardage is returned and the other sets reflect
+				 * this as well
+				 */
+
 				mainListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -170,12 +179,20 @@ public class DisplayHitList extends JFrame {
 							displayFabricInfoMain(actionFabric);
 							infoPanel.setVisible(true);
 							adjustYardageDown(actionFabric, yardage);
-							hitList.popBand();
-							hitList.popContrast();
+							if (bandFabric.isEmpty() == false) {
+								hitList.popBand();
+							}
+							if (contrastFabric.isEmpty() == false) {
+								hitList.popContrast();
+							}
 						} else if (source.isSelected() == false) {
 							adjustYardageUp(temp, yardage);
-							hitList.popBand();
-							hitList.popContrast();
+							if (bandFabric.isEmpty() == false) {
+								hitList.popBand();
+							}
+							if (contrastFabric.isEmpty() == false) {
+								hitList.popContrast();
+							}
 						}
 					}
 				};
@@ -190,6 +207,10 @@ public class DisplayHitList extends JFrame {
 					constraints.gridy++;
 				}
 			}
+			/**
+			 * same as above for this set of fabric but only fires when the pattern calls
+			 * for contrast fabric
+			 */
 			if (contrastFabric.isEmpty() == false) {
 				displayButtons.add(new JSeparator(SwingConstants.HORIZONTAL), constraints);
 				constraints.gridy++;
@@ -197,7 +218,7 @@ public class DisplayHitList extends JFrame {
 						+ "'s , specified requitements for the Contrast Fabric: ");
 				displayButtons.add(contrastFabricLabel, constraints);
 				constraints.gridy++;
-				
+
 				contrastListener = new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						JCheckBox source = (JCheckBox) e.getSource();
@@ -207,16 +228,25 @@ public class DisplayHitList extends JFrame {
 							displayFabricInfoContrast(actionFabric);
 							infoPanel.setVisible(true);
 							adjustYardageDown(actionFabric, yardage);
-							hitList.popBand();
-							hitList.popMain();
+							if (bandFabric.isEmpty() == false) {
+								hitList.popBand();
+							}
+							if (contrastFabric.isEmpty() == false) {
+								hitList.popMain();
+							}
 						} else if (source.isSelected() == false) {
 							adjustYardageUp(actionFabric, yardage);
-							hitList.popBand();
-							hitList.popMain();
+							if (bandFabric.isEmpty() == false) {
+								hitList.popBand();
+							}
+							if (contrastFabric.isEmpty() == false) {
+								hitList.popMain();
+							}
 						}
 					}
-			
+
 				};
+
 				contrastFabricBoxes = new JCheckBox[contrastFabric.size()];
 				for (i = 0; i < contrastFabricBoxes.length; i++) {
 					temp = contrastFabric.get(i);
@@ -229,6 +259,9 @@ public class DisplayHitList extends JFrame {
 					constraints.gridy++;
 				}
 			}
+			/**
+			 * same as above but only fires if pattern calls for band fabric
+			 */
 			if (bandFabric.isEmpty() == false) {
 				displayButtons.add(new JSeparator(SwingConstants.HORIZONTAL), constraints);
 				constraints.gridy++;
@@ -246,12 +279,20 @@ public class DisplayHitList extends JFrame {
 							displayFabricInfoBand(actionFabric);
 							infoPanel.setVisible(true);
 							adjustYardageDown(actionFabric, yardage);
-							hitList.popContrast();
-							hitList.popMain();
+							if (bandFabric.isEmpty() == false) {
+								hitList.popMain();
+							}
+							if (contrastFabric.isEmpty() == false) {
+								hitList.popContrast();
+							}
 						} else if (source.isSelected() == false) {
 							adjustYardageUp(actionFabric, yardage);
-							hitList.popContrast();
-							hitList.popMain();
+							if (bandFabric.isEmpty() == false) {
+								hitList.popMain();
+							}
+							if (contrastFabric.isEmpty() == false) {
+								hitList.popContrast();
+							}
 						}
 					}
 				};
@@ -268,7 +309,10 @@ public class DisplayHitList extends JFrame {
 				}
 			}
 		}
-
+		/**
+		 * creates button to confirm selection and popup to check user input after
+		 * confirmation fabrics are selected
+		 */
 		JButton popAndClose = new JButton("Use these Fabrics");
 		ActionListener popCloseListener = new ActionListener() {
 
@@ -308,6 +352,9 @@ public class DisplayHitList extends JFrame {
 
 	}
 
+	/**
+	 * checks if yardage== 0 after pop is confirmed and removes fabric if so.
+	 */
 	private void popConfirmed() {
 		// takes selected pull up each fabric by name(?) edit yardage by patterns held
 		// values if yardage ==0 after remove;
@@ -316,26 +363,22 @@ public class DisplayHitList extends JFrame {
 
 		Fabric mainFabricSelected = Utility.searchName(main.strip(), fabricInventory);
 
-		double hold = mainFabricSelected.getYardage() - hitList.getMainFabric();
-		if (hold > 0) {
-			mainFabricSelected.setYardage(hold);
-		} else {
+		double hold = mainFabricSelected.getYardage();
+		if (hold == 0) {
 			fabricInventory.remove(mainFabricSelected);
 		}
 
 		if (contrastFabric.isEmpty() == false) {
 			contrastFabricSelected = Utility.searchName(contrast.strip(), fabricInventory);
-			hold = contrastFabricSelected.getYardage() - hitList.getContrastFabric();
-			if (hold > 0) {
-				contrastFabricSelected.setYardage(hold);
+			hold = contrastFabricSelected.getYardage();
+			if (hold == 0) {
+				fabricInventory.remove(contrastFabricSelected);
 			}
 		}
 		if (bandFabric.isEmpty() == false) {
 			bandFabricSelected = Utility.searchName(band.strip(), fabricInventory);
-			hold = bandFabricSelected.getYardage() - hitList.getBandFabric();
-			if (hold > 0) {
-				bandFabricSelected.setYardage(hold);
-			} else {
+			hold = bandFabricSelected.getYardage();
+			if (hold == 0) {
 				fabricInventory.remove(bandFabricSelected);
 			}
 		}
@@ -346,6 +389,10 @@ public class DisplayHitList extends JFrame {
 		}
 	}
 
+	/**
+	 * finds which fabrics have been selected create the display text area for the
+	 * confirmation dialog
+	 */
 	private void getSelected() {
 		String mainFabricPrompt = "Main Fabric selected: \n\t";
 		String contrastFabricPrompt = "";
@@ -362,33 +409,66 @@ public class DisplayHitList extends JFrame {
 		selected = new JTextArea(mainFabricPrompt + main + contrastFabricPrompt + contrast + bandFabricPrompt + band);
 	}
 
+	/**
+	 * if no fabrics match search terms in hitlist this dialog is created
+	 */
 	private void notEnoughFabric() {
 		JOptionPane.showMessageDialog(this, "No fabrics match all specified requirements", "Error", DISPOSE_ON_CLOSE);
 
 	}
 
+	/**
+	 * creates a display to show fabric details for main fabric selected in display
+	 * 
+	 * @param temp
+	 */
 	private void displayFabricInfoMain(Fabric temp) {
 		String fabric = temp.toString();
 		mainDisplay.setText(fabric);
 
 	}
 
+	/**
+	 * creates a display to show fabric details for contrast fabric selected in
+	 * display
+	 * 
+	 * @param temp
+	 */
 	private void displayFabricInfoContrast(Fabric temp) {
 		String fabric = temp.toString();
 		contrastDisplay.setText(fabric);
 	}
 
+	/**
+	 * creates a display to show fabric details for band fabric selected in display
+	 * 
+	 * @param temp
+	 */
 	private void displayFabricInfoBand(Fabric temp) {
 		String fabric = temp.toString();
 		bandDisplay.setText(fabric);
 	}
 
+	/**
+	 * adjusts the yardage for the fabric selected by the patterns specified amount
+	 * used in the listeners for the fabrics selected when checked
+	 * 
+	 * @param temp2
+	 * @param yardage2
+	 */
 	public void adjustYardageDown(Fabric temp2, double yardage2) {
 		double original = temp2.getYardage();
 		double after = original - yardage2;
 		temp2.setYardage(after);
 	}
 
+	/**
+	 * resets yardage for fabric unselected by the amount specified in the pattern,
+	 * used in the listeners for the fabrics selected when unchecked
+	 * 
+	 * @param temp2
+	 * @param yardage2
+	 */
 	public void adjustYardageUp(Fabric temp2, double yardage2) {
 
 		double original = temp2.getYardage();

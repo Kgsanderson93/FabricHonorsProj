@@ -1,5 +1,7 @@
-//Takes User input to construct a new fabric 
-// need to implement check that all required input is valid 
+
+/**
+ * Takes User input to construct a new fabric need to implement check that all required input is valid first class created thus little user error coverage and methods tend towards brute force rather than any manner of sophisticated handing 
+ */
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -43,9 +45,16 @@ public class FabricConstructor extends JFrame {
 	private JComboBox<String> cbfabricBase = new JComboBox<String>(Fabric.FABRIC_BASES);
 
 	private JLabel jlSuitableForPrompt = new JLabel("Select what the fabric is suitable for");
-	private JCheckBox[] boxes = new JCheckBox[Pattern.PATTERN_TYPES.length]; // Each checkbox will get a name of garment from
-																		// suitablefor array.
-	
+	private JCheckBox[] boxes = new JCheckBox[Pattern.PATTERN_TYPES.length]; // Each checkbox will get a name of garment
+																				// from
+	// suitablefor array.
+
+	/**
+	 * constructor creates an instance of fabric constructor
+	 * 
+	 * @param fabricSave
+	 * @param patternSave
+	 */
 	public FabricConstructor(SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
 		GridBagLayout layout = new GridBagLayout();
 		JPanel addAFabric = new JPanel(layout);
@@ -89,7 +98,9 @@ public class FabricConstructor extends JFrame {
 			constraints.gridy++;
 		}
 
-		// addAndWait(addButton);
+		/**
+		 * listener for adding the fabric that creates a show confirm dialog
+		 */
 		ActionListener addButtonListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -107,59 +118,88 @@ public class FabricConstructor extends JFrame {
 		this.setVisible(true);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getFabricName() {
 		return fabricNameInput.getText();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public double getYardage() {
 		return Double.parseDouble(fabricYardageInput.getText());
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getStretch() {
 		return Integer.parseInt(jtStretchInput.getText());
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getFabricBase() {
 		return cbfabricBase.getSelectedItem().toString();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getSelectedNames() {
 		String selected = "";
 		for (JCheckBox box : boxes)
 			if (box.isSelected())
 				selected = selected + " " + (box.getText());
-		if (selected=="") {
-			selected=Utility.arrayToString(Pattern.PATTERN_TYPES);
+		if (selected == "") {
+			selected = Utility.arrayToString(Pattern.PATTERN_TYPES);
 		}
 		return selected;
 	}
 
+	/**
+	 * creates dialog to confirm fabric specifications and creates panel with this
+	 * information to pass to an instance of confirmation dialog
+	 * 
+	 * @param fabricSave
+	 * @param patternSave
+	 */
 	public void showConfirmDialog(SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
 		String fabricName = getFabricName();
 		double yardage = getYardage();
 		int stretch = getStretch();
 		String baseSelection = getFabricBase();
 		String selected = getSelectedNames();
-		
+
 		Fabric newFabric = new Fabric(fabricName, yardage, baseSelection, stretch, selected);
 
 		JPanel displayInfo2Confirm = new JPanel();
-		JTextArea info= new JTextArea(newFabric.toString());
+		JTextArea info = new JTextArea(newFabric.toString());
 		info.setOpaque(false);
-		
-		info.setBackground(new Color(0, 0, 0, 0));
-			displayInfo2Confirm.add(info);	
 
+		info.setBackground(new Color(0, 0, 0, 0));
+		displayInfo2Confirm.add(info);
 
 		// Add the components to the window
 
 		@SuppressWarnings("unused")
-		ConfirmationDialog<Fabric, Pattern> confirmationDialog = new ConfirmationDialog<Fabric,Pattern>(this, fabricSave,patternSave, displayInfo2Confirm,
-				newFabric, "Add A Fabric");
+		ConfirmationDialog<Fabric, Pattern> confirmationDialog = new ConfirmationDialog<Fabric, Pattern>(this,
+				fabricSave, patternSave, displayInfo2Confirm, newFabric, "Add A Fabric");
 		// Add the Fabric to the Inventory
 
 	}
 
+	/**
+	 * clears all fields after add, might be outdated after utilities clear fields
+	 */
 	public void clearFields() {
 
 		fabricNameInput.setText(null);
@@ -171,6 +211,11 @@ public class FabricConstructor extends JFrame {
 		}
 	}
 
+	/**
+	 * 
+	 * @param fabricList
+	 * @throws IOException
+	 */
 	public void writeFabricList(ArrayList<Fabric> fabricList) throws IOException {
 		SaveFile<Fabric> fabricSave = new SaveFile<>(fabricList);
 		fabricSave.saveInventory(FABRIC_SAVE);

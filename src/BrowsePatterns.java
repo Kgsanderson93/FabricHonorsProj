@@ -15,8 +15,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
+
 /**
- *  a window created from the start window that allows the user to browse all previously created patterns and search against fabric for a particular one.
+ * a window created from the start window that allows the user to browse all
+ * previously created patterns and search against fabric for a particular one.
+ * 
  * @author Kayla Sanderson
  *
  */
@@ -45,7 +48,9 @@ public class BrowsePatterns extends JFrame {
 	private Pattern selected;
 
 	public BrowsePatterns(SaveFile<Fabric> fabricSave2, SaveFile<Pattern> patternSave2) {
-		// create layouts
+		/**
+		 * create layouts
+		 */
 		BorderLayout layout = new BorderLayout();
 		BorderLayout layout2 = new BorderLayout();
 		GridBagLayout gridLayout = new GridBagLayout();
@@ -67,7 +72,7 @@ public class BrowsePatterns extends JFrame {
 		buttonPanel = new JPanel(gridLayout2);
 
 		/**
-		 *  set up frame display
+		 * set up frame display
 		 */
 		this.setContentPane(display);
 		this.setSize(DEFAULT_X_SIZE, DEFAULT_Y_SIZE);
@@ -75,7 +80,7 @@ public class BrowsePatterns extends JFrame {
 		this.setVisible(true);
 
 		/**
-		 *  set info panel to start with a blank JTextArea that is hidden
+		 * set info panel to start with a blank JTextArea that is hidden
 		 */
 		patternInfoPanel.setVisible(false);
 		patternInfo = new JTextArea("");
@@ -86,7 +91,7 @@ public class BrowsePatterns extends JFrame {
 		patternInfoPanel.add(patternInfoLabel, BorderLayout.PAGE_START);
 
 		/**
-		 *  initialize other instance variables
+		 * initialize other instance variables
 		 */
 		patternSave = patternSave2;
 		fabricSave = fabricSave2;
@@ -96,9 +101,9 @@ public class BrowsePatterns extends JFrame {
 		jPatternButtons = new ButtonGroup();
 
 		/**
-		* / create JRadio buttons their listeners and add buttons to group and add
-		*listeners to each button, lastly add each button to the button panel and up
-		*gridx.
+		 * / create JRadio buttons their listeners and add buttons to group and add
+		 * listeners to each button, lastly add each button to the button panel and up
+		 * gridx.
 		 * 
 		 */
 		if (patternList.isEmpty() == true) {
@@ -114,15 +119,14 @@ public class BrowsePatterns extends JFrame {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						/**
-						 *  display text for pattern
+						 * display text for pattern
 						 */
 						patternInfo.setText(temp.toString());
 						patternInfoPanel.setVisible(true);
 						/**
-						 *  set selected button to temp for delete hitlist button use.
+						 * set selected button to temp for delete hitlist button use.
 						 */
 						selected = temp;
-
 					}
 				};
 				patternButton[i].addActionListener(buttonListeners[i]);
@@ -130,57 +134,67 @@ public class BrowsePatterns extends JFrame {
 				constraints.gridy++;
 			}
 		}
+		/**
+		 * create buttons delete, hitList, add
+		 */
+		JButton delete = new JButton("delete this Pattern");
+		JButton hitList = new JButton("search for fabric for this Pattern");
+		JButton add = new JButton("add a new Pattern");
+		/**
+		 * listener for delete button that calls the method to create a popup to confirm
+		 * deletion
+		 */
+		ActionListener deleteListener = new ActionListener() {
 
-			/**create buttons delete, hitList, add
-			*/
-			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				confirmDelete();
 
-			// create buttons delete, hitList, add
+			}
+		};
+		/**
+		 * listener for hit list button creates a new instance of hitlist for the
+		 * selected fabric and creates an instance of display hitlist
+		 */
+		ActionListener hitListListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				HitList hits = new HitList(selected, fabricSave);
+				@SuppressWarnings("unused")
+				DisplayHitList hitDisplay = new DisplayHitList(hits, fabricSave);
+			}
+		};
+		/**
+		 * listener for add button creates an instance of pattern constructor
+		 */
+		ActionListener addListener = new ActionListener() {
 
-			JButton delete = new JButton("delete this Pattern");
-			JButton hitList = new JButton("search for fabric for this Pattern");
-			JButton add = new JButton("add a new Pattern");
-			ActionListener deleteListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unused")
+				PatternConstructor constructPattern = new PatternConstructor(fabricSave, patternSave);
+			}
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					confirmDelete();
+		};
 
-				}
-			};
-			ActionListener hitListListener = new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					HitList hits = new HitList(selected, fabricSave);
-					@SuppressWarnings("unused")
-					DisplayHitList hitDisplay = new DisplayHitList(hits, fabricSave);
-				}
-			};
-			ActionListener addListener = new ActionListener() {
+		delete.addActionListener(deleteListener);
+		hitList.addActionListener(hitListListener);
+		add.addActionListener(addListener);
+		buttonPanel.add(delete, constraints);
+		constraints.gridx++;
+		buttonPanel.add(hitList, constraints);
+		constraints.gridx++;
+		buttonPanel.add(add, constraints);
+		display.add(patternInfoPanel, BorderLayout.LINE_END);
+		display.add(patternButtonDisplay, BorderLayout.LINE_START);
+		display.add(buttonPanel, BorderLayout.PAGE_END);
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					@SuppressWarnings("unused")
-					PatternConstructor constructPattern = new PatternConstructor(fabricSave, patternSave);
-				}
-
-			};
-			delete.addActionListener(deleteListener);
-			hitList.addActionListener(hitListListener);
-			add.addActionListener(addListener);
-			buttonPanel.add(delete, constraints);
-			constraints.gridx++;
-			buttonPanel.add(hitList, constraints);
-			constraints.gridx++;
-			buttonPanel.add(add, constraints);
-			display.add(patternInfoPanel, BorderLayout.LINE_END);
-			display.add(patternButtonDisplay, BorderLayout.LINE_START);
-			display.add(buttonPanel, BorderLayout.PAGE_END);
-		
 	}
-/**
- * confirmDelete creates a pop up window that allows the user to sure that they intend to delete a given pattern
- */
+
+	/**
+	 * confirmDelete creates a pop up window that allows the user to sure that they
+	 * intend to delete a given pattern
+	 */
 	public void confirmDelete() {
 		int response = JOptionPane.showConfirmDialog(null, selected.toString(),
 				"Are you sure you want to delete this Pattern?", JOptionPane.YES_NO_OPTION);
@@ -190,17 +204,20 @@ public class BrowsePatterns extends JFrame {
 
 		}
 	}
-/**
- * confirmDelete handles the actual deletion if the user if sure that the pattern should be deleted 
- * it saves after deletion so as to not allow the pattern to be accidentally re established if getInventory should be called before save
- * IO Exception should not occur but if it does the program simply prints the stack
- */
+
+	/**
+	 * confirmDelete handles the actual deletion if the user if sure that the
+	 * pattern should be deleted it saves after deletion so as to not allow the
+	 * pattern to be accidentally re established if getInventory should be called
+	 * before save IO Exception should not occur but if it does the program simply
+	 * prints the stack
+	 */
 	public void popConfirmed() {
 		patternList.remove(selected);
 		try {
 			patternSave.saveInventory(StartApp.PATTERN_SAVE);
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		}
 	}

@@ -1,10 +1,11 @@
-//window to take user input to create a pattern 
-//takes user input
-//checks to see if can be split is true
-// use internal frame to create dialog asking for specifics of split
-//check if split is valid(ie not more than original yardage) if not create dialog to complain
-//checks that minimum information is input 
-//
+
+/**
+ * window to take user input to create a pattern 
+ *checks to see if can be split is true
+ *use internal frame to create dialog asking for specifics of split
+ *check if split is valid(ie not more than original yardage) if not create dialog to complain
+ *checks that minimum information is input 
+ */
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -84,6 +85,12 @@ public class PatternConstructor extends JFrame {
 	private JButton add = new JButton("Continue to fabric selection");
 	private Pattern newPattern = null;
 
+	/**
+	 * constructor for window
+	 * 
+	 * @param fabricSave
+	 * @param patternSave
+	 */
 	public PatternConstructor(SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
 		// create panel, layout and layout constraints
 		GridBagLayout layout = new GridBagLayout();
@@ -100,7 +107,9 @@ public class PatternConstructor extends JFrame {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setVisible(true);
 
-		// create Split Yardage Panel
+		/**
+		 * create Split Yardage Panel
+		 */
 		JPanel splitYardagePanel = new JPanel(layout);
 		constraints.gridx = 0;
 		splitYardagePanel.add(jLMainYardagePrompt, constraints);
@@ -122,7 +131,9 @@ public class PatternConstructor extends JFrame {
 		addAPatternMain.add(splitYardagePanel, constraints);
 		splitYardagePanel.setVisible(false);
 
-		// name added to panel 1
+		/**
+		 * name added to panel 1
+		 */
 		constraints.gridy = 0;
 		constraints.gridx = 0;
 		addAPatternMain.add(prompt, constraints);
@@ -132,7 +143,9 @@ public class PatternConstructor extends JFrame {
 		constraints.gridx = 1;
 		addAPatternMain.add(jTNameInput, constraints);
 
-		// pattern type added to panel 1
+		/**
+		 * pattern type added to panel 1
+		 */
 		constraints.gridy = 2;
 		constraints.gridx = 0;
 		addAPatternMain.add(jLPatternTypesPrompt, constraints);
@@ -142,7 +155,9 @@ public class PatternConstructor extends JFrame {
 			addAPatternMain.add(jCBPatternTypes[i], constraints);
 			constraints.gridx++;
 		}
-		// who the pattern is for added to panel 1
+		/**
+		 * who the pattern is for added to panel 1
+		 */
 		constraints.gridy = 3;
 		constraints.gridx = 0;
 		addAPatternMain.add(jLWhoFor, constraints);
@@ -152,7 +167,9 @@ public class PatternConstructor extends JFrame {
 			addAPatternMain.add(jCBwhofor[i], constraints);
 			constraints.gridx++;
 		}
-		// bases the pattern is suitable for added to panel 1
+		/**
+		 * bases the pattern is suitable for added to panel 1
+		 */
 		constraints.gridy = 4;
 		constraints.gridx = 0;
 		addAPatternMain.add(jlBaseSelector, constraints);
@@ -162,7 +179,9 @@ public class PatternConstructor extends JFrame {
 			addAPatternMain.add(jCBfabricBase[i], constraints);
 			constraints.gridx++;
 		}
-		// add stretch requirements
+		/**
+		 * add stretch requirements
+		 */
 		constraints.gridy = 5;
 		constraints.gridx = 0;
 		addAPatternMain.add(jLMinStretch, constraints);
@@ -174,14 +193,18 @@ public class PatternConstructor extends JFrame {
 		constraints.gridx++;
 		addAPatternMain.add(jTMaxStretch, constraints);
 
-		// add yardage
+		/**
+		 * add yardage
+		 */
 		constraints.gridy = 7;
 		constraints.gridx = 0;
 		addAPatternMain.add(jLYardagePrompt, constraints);
 		constraints.gridx++;
 		addAPatternMain.add(jTYardageInput, constraints);
 
-		// add buttons to group
+		/**
+		 * add buttons to group
+		 */
 		groupYesNo.add(yes);
 		groupYesNo.add(no);
 
@@ -226,132 +249,31 @@ public class PatternConstructor extends JFrame {
 		addAPatternMain.add(add, constraints);
 	}
 
+	/**
+	 * creates an instance of confirm dialog and passes it the panel to display the
+	 * information to confirm
+	 * 
+	 * @param patternSave
+	 * @param fabricSave
+	 */
 	private void showConfirmDialog(SaveFile<Pattern> patternSave, SaveFile<Fabric> fabricSave) {
 
 		JPanel info2display = confirmationPanel();
 		@SuppressWarnings("unused")
-		ConfirmationDialog<Pattern, Fabric> confirmationDialog = new ConfirmationDialog<Pattern, Fabric>(this, patternSave, fabricSave,
-				info2display, newPattern, "Add A Pattern");
+		ConfirmationDialog<Pattern, Fabric> confirmationDialog = new ConfirmationDialog<Pattern, Fabric>(this,
+				patternSave, fabricSave, info2display, newPattern, "Add A Pattern");
 
 	}
 
-	public boolean isSplityardage() {
-		boolean splitYardageb = false;
-		if (yes.isSelected() == true)
-			splitYardageb = true;
-		return splitYardageb;
-	}
-
-	public void setSplityardage(boolean splityardage) {
-		this.splitYardage = splityardage;
-	}
-
-	public boolean getSplitYardage() {
-		return splitYardage;
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPatternTypesSelected() {
-		return patternTypesSelected;
-	}
-
-	public void setPatternTypesSelected(String patternTypesSelected) {
-		if (patternTypesSelected.equals(null))
-			patternTypesSelected = Utility.arrayToString(Pattern.PATTERN_TYPES);
-		this.patternTypesSelected = patternTypesSelected;
-	}
-
-	public String getBase() {
-		return base;
-	}
-
-	public void setBase(String base) {
-		if (base.equals(null))
-			base = Utility.arrayToString(Fabric.FABRIC_BASES);
-		this.base = base;
-	}
-
-	public String getWhofor() {
-		return whofor;
-	}
-
-	public void setWhofor(String whofor) {
-		if (whofor.equals(null))
-			whofor = Utility.arrayToString(Pattern.WHO_FOR);
-		this.whofor = whofor;
-	}
-
-	public int getMinStretch() {
-		return minStretch;
-	}
-
-	public void setMinStretch(int minStretch) {
-
-		this.minStretch = minStretch;
-	}
-
-	public int getMaxStretch() {
-		return maxStretch;
-	}
-
-	public void setMaxStretch(int maxStretch) {
-		if (maxStretch == 0) {
-			maxStretch = 200;
-		}
-		this.maxStretch = maxStretch;
-	}
-
-	public double getYardage() {
-		return yardage;
-	}
-
-	public void setYardage(double yardage) {
-		this.yardage = yardage;
-	}
-
-	public double getContrastFabric() {
-		return contrastFabric;
-	}
-
-	public void setContrastFabric(double d) {
-		this.contrastFabric = d;
-	}
-
-	public double getMainFabric() {
-		return mainFabric;
-	}
-
-	public void setMainFabric(double mainFabric) {
-		this.mainFabric = mainFabric;
-	}
-
-	public double getBandFabric() {
-		return bandFabric;
-	}
-
-	public void setBandFabric(double bandFabric) {
-		this.bandFabric = bandFabric;
-	}
-
-
-
-	public Pattern getNewPattern() {
-		return newPattern;
-	}
-
-	private void setNewPattern(Pattern pattern) {
-		newPattern = pattern;
-	}
-
+	/**
+	 * grabs entered information creates dialog if minimum information is not
+	 * entered to insist on it being entered if unnecessary information is not
+	 * supplied supplies defaults all int numbers are behind a try to catch no
+	 * entered information to avoid a number format exception returns a boolean to
+	 * let the caller know everything went as planned
+	 * 
+	 * @return
+	 */
 	public boolean populateFields() {
 		boolean populated = false;
 		if (jTNameInput.getText().equals(null) || jTYardageInput.getText().equals(null)) {
@@ -381,20 +303,31 @@ public class PatternConstructor extends JFrame {
 		return populated;
 	}
 
+	/**
+	 * creates the panel to hold the information and takes the new pattern and runs
+	 * to string to put into the textarea in the panel sets panel background to
+	 * transparent
+	 * 
+	 * @return
+	 */
 	public JPanel confirmationPanel() {
 		// create Panel and JLabels
 		JPanel info2display = new JPanel();
-		JTextArea info= new JTextArea(newPattern.toString());
+		JTextArea info = new JTextArea(newPattern.toString());
 		info.setOpaque(false);
-		
+
 		info.setBackground(new Color(0, 0, 0, 0));
 		info2display.add(info);
 
-		
 		return info2display;
 
 	}
 
+	/**
+	 * creates new pattern
+	 * 
+	 * @return
+	 */
 	public boolean createNewPattern() {
 		boolean created = false;
 		if (name == null || yardage == 0) {
@@ -415,6 +348,11 @@ public class PatternConstructor extends JFrame {
 		return created;
 	}
 
+	/**
+	 * sets fields to input for easy access later
+	 * 
+	 * @return
+	 */
 	public boolean tryAdd() {
 		boolean created = false;
 		boolean populate = populateFields();
@@ -437,5 +375,216 @@ public class PatternConstructor extends JFrame {
 					"main contrast and band fabric must be equal to yardage specified");
 		}
 		return created;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isSplityardage() {
+		boolean splitYardageb = false;
+		if (yes.isSelected() == true)
+			splitYardageb = true;
+		return splitYardageb;
+	}
+
+	/**
+	 * 
+	 * @param splityardage
+	 */
+	public void setSplityardage(boolean splityardage) {
+		this.splitYardage = splityardage;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean getSplitYardage() {
+		return splitYardage;
+	}
+
+	/**
+	 * 
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * 
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getPatternTypesSelected() {
+		return patternTypesSelected;
+	}
+
+	/**
+	 * 
+	 * @param patternTypesSelected
+	 */
+	public void setPatternTypesSelected(String patternTypesSelected) {
+		if (patternTypesSelected.equals(null))
+			patternTypesSelected = Utility.arrayToString(Pattern.PATTERN_TYPES);
+		this.patternTypesSelected = patternTypesSelected;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getBase() {
+		return base;
+	}
+
+	/**
+	 * 
+	 * @param base
+	 */
+	public void setBase(String base) {
+		if (base.equals(null))
+			base = Utility.arrayToString(Fabric.FABRIC_BASES);
+		this.base = base;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getWhofor() {
+		return whofor;
+	}
+
+	/**
+	 * 
+	 * @param whofor
+	 */
+	public void setWhofor(String whofor) {
+		if (whofor.equals(null))
+			whofor = Utility.arrayToString(Pattern.WHO_FOR);
+		this.whofor = whofor;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public int getMinStretch() {
+		return minStretch;
+	}
+
+	/**
+	 * 
+	 * @param minStretch
+	 */
+	public void setMinStretch(int minStretch) {
+
+		this.minStretch = minStretch;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public int getMaxStretch() {
+		return maxStretch;
+	}
+
+	/**
+	 * 
+	 * @param maxStretch
+	 */
+	public void setMaxStretch(int maxStretch) {
+		if (maxStretch == 0) {
+			maxStretch = 200;
+		}
+		this.maxStretch = maxStretch;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public double getYardage() {
+		return yardage;
+	}
+
+	/**
+	 * 
+	 * @param yardage
+	 */
+	public void setYardage(double yardage) {
+		this.yardage = yardage;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public double getContrastFabric() {
+		return contrastFabric;
+	}
+
+	/**
+	 * 
+	 * @param d
+	 */
+	public void setContrastFabric(double d) {
+		this.contrastFabric = d;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public double getMainFabric() {
+		return mainFabric;
+	}
+
+	/**
+	 * 
+	 * @param mainFabric
+	 */
+	public void setMainFabric(double mainFabric) {
+		this.mainFabric = mainFabric;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public double getBandFabric() {
+		return bandFabric;
+	}
+
+	/**
+	 * 
+	 * @param bandFabric
+	 */
+	public void setBandFabric(double bandFabric) {
+		this.bandFabric = bandFabric;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Pattern getNewPattern() {
+		return newPattern;
+	}
+
+	/**
+	 * 
+	 * @param pattern
+	 */
+	public void setNewPattern(Pattern pattern) {
+		newPattern = pattern;
 	}
 }

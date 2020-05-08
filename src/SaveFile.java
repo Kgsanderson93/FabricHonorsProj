@@ -8,6 +8,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+/**
+ * class creates and handles all save file functions as a generic to take both
+ * pattern and fabric saves
+ * 
+ * @author Kayla
+ *
+ * @param <E>
+ */
 public class SaveFile<E> {
 
 	private ArrayList<E> currentList = new ArrayList<>();

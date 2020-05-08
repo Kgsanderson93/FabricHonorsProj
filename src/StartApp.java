@@ -1,6 +1,12 @@
 import java.io.IOException;
 
-
+/**
+ * main method starts app and initializes saves holds save locations and
+ * initializes first window
+ * 
+ * @author Kayla
+ *
+ */
 public class StartApp {
 
 	public static final String PATTERN_SAVE = "pattern_inventory.sav";
