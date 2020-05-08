@@ -1,10 +1,9 @@
-// A class to implement a popup confirmation to save the constructed fabric
+/**
+ *  A class to implement a popup confirmation to save the constructed fabric/pattern 
+ *  if pattern it also creates a hitList and creates the window that displays it
+ */
 
-//needs to link to the action of a button being pressed
-//should spit back all user entered texts 
-//should show 2 buttons confirm/dump
-//confirm should allow the original button being pressed to continue
-// dump should reset the window the original button came from 
+
 
 
 import java.awt.BorderLayout;
@@ -50,7 +49,7 @@ public class ConfirmationDialog<E, F> {
 		constraints.weighty = 0;
 
 		JLabel confirmPrompt = new JLabel("Is this correct? Press Yes to save and No to return to "+ title);
-//change to +class?
+
 		
 		JButton yesButton = new JButton("yes");
 		JButton noButton = new JButton("no");
@@ -92,6 +91,10 @@ public class ConfirmationDialog<E, F> {
 		
 	}
 @SuppressWarnings("unchecked")
+/**
+ * checks if the new object coming in is a pattern and handles creation of hitlist instance and hitlist display instance
+ * @param saveFile2
+ */
 public void FabricHitList(SaveFile<F> saveFile2) {
 	if(newE instanceof Pattern) {
 		Pattern newPattern=(Pattern)newE;
@@ -104,6 +107,10 @@ public void FabricHitList(SaveFile<F> saveFile2) {
 	}
 	
 }
+/**
+ * tells save file to save the current list with its new addition to the appropriate save file location
+ * @param saveFile2
+ */
 	public void confirmationyes(SaveFile<E> saveFile2) {
 
 		String location = saveFile2.getSaveLocation();
@@ -111,31 +118,49 @@ public void FabricHitList(SaveFile<F> saveFile2) {
 		try {
 			saveFile2.saveInventory(location);
 		} catch (IOException e) {
-			// Also notify the user that we couldn't save the file for some reason.
+			
 			e.printStackTrace();
 		}
 	}
-
+/**
+ * 
+ * @return
+ */
 	public JFrame getParent() {
 		return parent;
 	}
-
+/**
+ * 
+ * @param parent
+ */
 	public void setParent(JFrame parent) {
 		this.parent = parent;
 	}
-
+/**
+ * 
+ * @return
+ */
 	public ArrayList<E> getSaveFile() {
 		return saveFile;
 	}
-
+/**
+ * 
+ * @param saveFile
+ */
 	public void setSaveFile(ArrayList<E> saveFile) {
 		this.saveFile = saveFile;
 	}
-
+/**
+ * 
+ * @return
+ */
 	public E getNewE() {
 		return newE;
 	}
-
+/**
+ * 
+ * @param newE
+ */
 	public void setNewE(E newE) {
 		this.newE = newE;
 	}

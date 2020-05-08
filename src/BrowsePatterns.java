@@ -14,7 +14,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
-
+/**
+ *  a window created from the start window that allows the user to browse all previously created patterns and search against fabric for a particular one.
+ * @author Kayla Sanderson
+ *
+ */
 public class BrowsePatterns extends JFrame {
 
 	/**
@@ -53,24 +57,32 @@ public class BrowsePatterns extends JFrame {
 		constraints.weightx = 1;
 		constraints.weighty = 0;
 
-		// create panels
+		/**
+		 * create panels
+		 */
 		display = new JPanel(layout);
 		patternInfoPanel = new JPanel(layout2);
 		patternButtonDisplay = new JPanel(gridLayout);
 		buttonPanel = new JPanel(gridLayout2);
 
-		// set up frame display
+		/**
+		 *  set up frame display
+		 */
 		this.setContentPane(display);
 		this.setSize(DEFAULT_X_SIZE, DEFAULT_Y_SIZE);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setVisible(true);
 
-		// set info panel to start with a blank JTextArea that is hidden
+		/**
+		 *  set info panel to start with a blank JTextArea that is hidden
+		 */
 		patternInfoPanel.setVisible(false);
 		patternInfo = new JTextArea("");
 		patternInfoPanel.add(patternInfo, BorderLayout.CENTER);
 
-		// initialize other instance variables
+		/**
+		 *  initialize other instance variables
+		 */
 		patternSave = patternSave2;
 		fabricSave = fabricSave2;
 		patternList = patternSave.getInventory();
@@ -78,9 +90,12 @@ public class BrowsePatterns extends JFrame {
 		buttonListeners = new ActionListener[patternList.size()];
 		jPatternButtons = new ButtonGroup();
 
-		// create JRadio buttons their listeners and add buttons to group and add
-		// listeners to each button, lastly add each button to the button panel and up
-		// gridx.
+		/**
+		* / create JRadio buttons their listeners and add buttons to group and add
+		*listeners to each button, lastly add each button to the button panel and up
+		*gridx.
+		 * 
+		 */
 		if (patternList.isEmpty() == true) {
 			JLabel isEmpty = new JLabel("You have no Patterns entered currently");
 			patternButtonDisplay.add(isEmpty, constraints);
@@ -93,10 +108,14 @@ public class BrowsePatterns extends JFrame {
 				buttonListeners[i] = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// display text for pattern
+						/**
+						 *  display text for pattern
+						 */
 						patternInfo.setText(temp.toString());
 						patternInfoPanel.setVisible(true);
-						// set selected button to temp for delete hitlist button use.
+						/**
+						 *  set selected button to temp for delete hitlist button use.
+						 */
 						selected = temp;
 
 					}
@@ -105,7 +124,9 @@ public class BrowsePatterns extends JFrame {
 				patternButtonDisplay.add(patternButton[i], constraints);
 				constraints.gridy++;
 			}
-			// create buttons delete, hitList, add
+			/**create buttons delete, hitList, add
+			*/
+			
 			JButton delete = new JButton("delete this Pattern");
 			JButton hitList = new JButton("search for fabric for this Pattern");
 			JButton add = new JButton("add a new Pattern");
@@ -147,7 +168,9 @@ public class BrowsePatterns extends JFrame {
 			display.add(buttonPanel, BorderLayout.PAGE_END);
 		}
 	}
-
+/**
+ * confirmDelete creates a pop up window that allows the user to sure that they intend to delete a given pattern
+ */
 	public void confirmDelete() {
 		int response = JOptionPane.showConfirmDialog(null, selected.toString(),
 				"Are you sure you want to delete this Pattern?", JOptionPane.YES_NO_OPTION);
@@ -157,13 +180,17 @@ public class BrowsePatterns extends JFrame {
 
 		}
 	}
-
+/**
+ * confirmDelete handles the actual deletion if the user if sure that the pattern should be deleted 
+ * it saves after deletion so as to not allow the pattern to be accidentally re established if getInventory should be called before save
+ * IO Exception should not occur but if it does the program simply prints the stack
+ */
 	public void popConfirmed() {
 		patternList.remove(selected);
 		try {
 			patternSave.saveInventory(StartApp.PATTERN_SAVE);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

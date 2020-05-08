@@ -14,8 +14,12 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+/**
+ * display HitList and allows user to select the fabrics the pattern should use and adjust the yardage accourdingly
+ * @author Kayla sanderson
+ *
+ */
 
-//display HitList
 public class DisplayHitList extends JFrame {
 
 	/**
@@ -43,11 +47,17 @@ public class DisplayHitList extends JFrame {
 	String main ="";
 	HitList hitList;
 	SaveFile<Fabric> fabricSave;
-	
+	/**
+	 * constant x size for window/constant y size for window 
+	 */
 	public static final int DEFAULT_X_SIZE = 800;
 	public static final int DEFAULT_Y_SIZE = 400;
 	
-	
+	/**
+	 * constructor for display hitlist
+	 * @param hits
+	 * @param fabricInventorySave
+	 */
 	public DisplayHitList(HitList hits, SaveFile<Fabric> fabricInventorySave) {
 		GridBagLayout layout = new GridBagLayout();
 		JPanel display = new JPanel(layout);
