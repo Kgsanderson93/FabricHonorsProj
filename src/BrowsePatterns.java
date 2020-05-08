@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -78,7 +79,11 @@ public class BrowsePatterns extends JFrame {
 		 */
 		patternInfoPanel.setVisible(false);
 		patternInfo = new JTextArea("");
+		patternInfo.setOpaque(false);
+		patternInfo.setBackground(new Color(0, 0, 0, 0));
 		patternInfoPanel.add(patternInfo, BorderLayout.CENTER);
+		JLabel patternInfoLabel = new JLabel("Selected pattern's available information");
+		patternInfoPanel.add(patternInfoLabel, BorderLayout.PAGE_START);
 
 		/**
 		 *  initialize other instance variables
@@ -124,6 +129,7 @@ public class BrowsePatterns extends JFrame {
 				patternButtonDisplay.add(patternButton[i], constraints);
 				constraints.gridy++;
 			}
+		}
 			/**create buttons delete, hitList, add
 			*/
 			
@@ -166,7 +172,7 @@ public class BrowsePatterns extends JFrame {
 			display.add(patternInfoPanel, BorderLayout.LINE_END);
 			display.add(patternButtonDisplay, BorderLayout.LINE_START);
 			display.add(buttonPanel, BorderLayout.PAGE_END);
-		}
+		
 	}
 /**
  * confirmDelete creates a pop up window that allows the user to sure that they intend to delete a given pattern

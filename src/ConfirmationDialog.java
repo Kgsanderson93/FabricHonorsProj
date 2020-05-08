@@ -70,6 +70,7 @@ public class ConfirmationDialog<E, F> {
 				Utility.clearFields(parent);
 				FabricHitList(saveFile2);
 				popup.dispose();
+				parent.dispose();
 			}
 		};
 		ActionListener addButtonListenerno = new ActionListener() {

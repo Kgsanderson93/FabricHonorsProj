@@ -46,7 +46,7 @@ public class FabricConstructor extends JFrame {
 	private JCheckBox[] boxes = new JCheckBox[Pattern.PATTERN_TYPES.length]; // Each checkbox will get a name of garment from
 																		// suitablefor array.
 	
-	public FabricConstructor(FirstWindow parent, SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
+	public FabricConstructor(SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
 		GridBagLayout layout = new GridBagLayout();
 		JPanel addAFabric = new JPanel(layout);
 		GridBagConstraints constraints = new GridBagConstraints();

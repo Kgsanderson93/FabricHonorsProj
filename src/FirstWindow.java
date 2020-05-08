@@ -42,6 +42,8 @@ public class FirstWindow extends JFrame {
 				ArrayList<Fabric> fabricList=fabricSave.getInventory();
 				for (Fabric fabric : fabricList)
 					System.out.println(fabric.toString());
+				@SuppressWarnings("unused")
+				BrowseFabric browse= new BrowseFabric(fabricSave, patternSave);
 			}
 		};
 		ActionListener browsePatternListener = new ActionListener() {
@@ -94,6 +96,6 @@ public class FirstWindow extends JFrame {
 
 	@SuppressWarnings("unused")
 	private void showfabricconstructor(SaveFile<Fabric> fabricSave, SaveFile<Pattern> patternSave) {
-		FabricConstructor fc = new FabricConstructor(this, fabricSave, patternSave);
+		FabricConstructor fc = new FabricConstructor(fabricSave, patternSave);
 	}
 }
